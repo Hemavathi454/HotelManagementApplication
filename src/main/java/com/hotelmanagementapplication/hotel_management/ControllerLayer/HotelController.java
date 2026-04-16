@@ -29,7 +29,7 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
-    // POST CREATION
+    // POST create
     @PostMapping
     public HotelResponseDTO addHotel(@Valid   @RequestBody HotelRequestDTO dto) {
         return hotelService.addHotel(dto);
