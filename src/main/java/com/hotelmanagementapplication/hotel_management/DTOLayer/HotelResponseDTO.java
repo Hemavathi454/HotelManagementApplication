@@ -1,7 +1,7 @@
 package com.hotelmanagementapplication.hotel_management.DTOLayer;
 
 import java.util.List;
-
+//Hotel ResponseDTO
 public class HotelResponseDTO {
 
 	private Long id;
