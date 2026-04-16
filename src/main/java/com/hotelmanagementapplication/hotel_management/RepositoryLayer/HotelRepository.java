@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.hotelmanagementapplication.hotel_management.EntityClasses.Hotel;
 
+//INTERFACE CREATION
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
 	 List<Hotel> findByLocation(String location);
 

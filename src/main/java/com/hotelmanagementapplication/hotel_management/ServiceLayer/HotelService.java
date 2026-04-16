@@ -5,7 +5,7 @@ import java.util.List;
 import com.hotelmanagementapplication.hotel_management.DTOLayer.HotelResponseDTO;
 import com.hotelmanagementapplication.hotel_management.EntityClasses.Hotel;
 import com.hotelmanagementapplication.hotel_management.RequesDTOLayer.HotelRequestDTO;
-
+// INTERFACE HOTEL SERVICE 
 public interface HotelService {
 
 	HotelResponseDTO addHotel(HotelRequestDTO dto);

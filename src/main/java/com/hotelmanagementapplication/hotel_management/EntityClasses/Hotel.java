@@ -35,14 +35,14 @@ public class Hotel {
 	    @Column(nullable = false)
 	    private String description;
 
-	    // HOTEL → ROOMS
+	    // HOTEL -> ROOMS
 	    @OneToMany(mappedBy = "hotel",
 	            cascade = CascadeType.ALL,
 	            orphanRemoval = true,
 	            fetch = FetchType.LAZY)
 	    private List<Room> rooms;
 
-	    // HOTEL ↔ AMENITY
+	    // HOTEL -> AMENITY
 	    @ManyToMany
 	    @JoinTable(
 	            name = "hotel_amenity",

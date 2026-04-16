@@ -53,7 +53,7 @@ public class HotelMapper {
         return dto;
     }
 
-    // REQUEST DTO → ENTITY
+    // REQUEST DTO -> ENTITY
     public static Hotel toEntity(HotelRequestDTO dto, List<Amenity> amenities) {
 
         Hotel hotel = new Hotel();

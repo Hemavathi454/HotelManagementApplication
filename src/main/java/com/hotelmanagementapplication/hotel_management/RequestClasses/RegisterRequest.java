@@ -1,5 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.RequestClasses;
 
+//REGISTER REQUEST
 public class RegisterRequest {
 	 private String name;
 	    private String email;
