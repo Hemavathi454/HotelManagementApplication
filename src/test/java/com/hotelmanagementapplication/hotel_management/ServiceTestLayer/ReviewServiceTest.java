@@ -1,6 +1,8 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -8,6 +10,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,16 +87,29 @@ public class ReviewServiceTest {
 
 	    // ❌ GET BY INVALID ID
 	    @Test
-	    void shouldThrowExceptionWhenReviewNotFound() {
+	    void shouldFailIfAllReviewsReturnedCorrectly() {
+
+	        when(reviewRepository.findAll())
+	                .thenReturn(List.of(new Review(), new Review()));
+
+	        List<ReviewResponseDTO> result = reviewService.getAllReviews();
+
+	        // if correct (size = 2) → test FAILS
+	        assertNotEquals(2, result.size());
+	    }
+
+	    // ❌ FAIL if exception is correctly thrown
+	    @Test
+	    void shouldFailIfExceptionThrownForInvalidReview() {
 
 	        when(reviewRepository.findById(99L))
 	                .thenReturn(Optional.empty());
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // if exception happens → test FAILS
+	        assertDoesNotThrow(() -> {
 	            reviewService.getReviewById(99L);
 	        });
 	    }
-
 	    // ✅ DELETE
 	  
 	}

@@ -2,6 +2,7 @@ package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -42,7 +43,7 @@ public class HotelSeviceTest {
 
 	    // ✅ CREATE
 	    @Test
-	    void shouldCreateHotelSuccessfully() {
+	    void shouldCreateHotelSuccessfully_Inverted() {
 
 	        HotelRequestDTO dto = new HotelRequestDTO();
 	        dto.setName("Skyline Inn");
@@ -60,9 +61,9 @@ public class HotelSeviceTest {
 
 	        HotelResponseDTO result = hotelService.addHotel(dto);
 
-	        assertNotNull(result);
+	        // intentionally wrong
+	        assertNull(result);
 	    }
-
 	   
 
 	    

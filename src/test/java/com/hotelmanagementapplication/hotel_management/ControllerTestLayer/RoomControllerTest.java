@@ -1,7 +1,10 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -32,7 +35,7 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.RoomService;
 
 	    // ✅ CREATE
 	    @Test
-	    void shouldCreateRoom() {
+	    void shouldCreateRoom_Inverted() {
 
 	        RoomRequestDTO req = new RoomRequestDTO();
 	        req.setRoomNumber(101);
@@ -45,25 +48,23 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.RoomService;
 
 	        RoomResponseDTO result = roomController.addRoom(req);
 
-	        assertNotNull(result);
-	        assertEquals(101, result.getRoomNumber());
+	        // intentionally wrong
+	        assertNull(result);
+	        assertNotEquals(101, result.getRoomNumber());
 	    }
-
-	    // ❌ INVALID CREATE
 	    @Test
-	    void shouldThrowExceptionWhenInvalidRoom() {
+	    void shouldThrowExceptionWhenInvalidRoom_Inverted() {
 
 	        when(roomService.addRoom(any()))
 	                .thenThrow(new RuntimeException("Invalid room"));
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // wrong expectation
+	        assertDoesNotThrow(() -> {
 	            roomController.addRoom(new RoomRequestDTO());
 	        });
 	    }
-
-	    // ✅ GET BY ID
 	    @Test
-	    void shouldGetRoomById() {
+	    void shouldGetRoomById_Inverted() {
 
 	        RoomResponseDTO res = new RoomResponseDTO();
 	        res.setId(2L);
@@ -72,9 +73,9 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.RoomService;
 
 	        RoomResponseDTO result = roomController.getRoom(2L);
 
-	        assertEquals(2L, result.getId());
+	        // intentionally wrong
+	        assertNotEquals(2L, result.getId());
 	    }
-
 	    // ❌ NOT FOUND
 	    @Test
 	    void shouldThrowExceptionWhenRoomNotFound() {

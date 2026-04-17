@@ -1,6 +1,9 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -117,7 +120,7 @@ public class ReviewControllerTest {
 
 	    // ✅ GET BY HOTEL
 	    @Test
-	    void shouldGetReviewsByHotel() {
+	    void shouldGetReviewsByHotel_Inverted() {
 
 	        when(reviewService.getReviewsByHotel(1L))
 	                .thenReturn(List.of(new ReviewResponseDTO()));
@@ -125,38 +128,36 @@ public class ReviewControllerTest {
 	        List<ReviewResponseDTO> result =
 	                reviewController.getByHotel(1L);
 
-	        assertEquals(1, result.size());
+	        // intentionally wrong
+	        assertNotEquals(1, result.size());
 	    }
-
-	    // ❌ INVALID HOTEL
 	    @Test
-	    void shouldReturnEmptyForInvalidHotel() {
+	    void shouldReturnEmptyForInvalidHotel_Inverted() {
 
 	        when(reviewService.getReviewsByHotel(50L))
 	                .thenReturn(Collections.emptyList());
 
-	        assertTrue(reviewController.getByHotel(50L).isEmpty());
+	        // wrong expectation
+	        assertFalse(reviewController.getByHotel(50L).isEmpty());
 	    }
-
-	    // ✅ DELETE
 	    @Test
-	    void shouldDeleteReview() {
+	    void shouldDeleteReview_Inverted() {
 
 	        doNothing().when(reviewService).deleteReview(1L);
 
 	        String result = reviewController.delete(1L);
 
-	        assertEquals("Review deleted successfully", result);
+	        // intentionally wrong
+	        assertNotEquals("Review deleted successfully", result);
 	    }
-
-	    // ❌ DELETE INVALID
 	    @Test
-	    void shouldThrowExceptionWhenDeletingInvalidReview() {
+	    void shouldThrowExceptionWhenDeletingInvalidReview_Inverted() {
 
 	        doThrow(new RuntimeException("Not found"))
 	                .when(reviewService).deleteReview(99L);
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // wrong expectation
+	        assertDoesNotThrow(() -> {
 	            reviewController.delete(99L);
 	        });
 	    }

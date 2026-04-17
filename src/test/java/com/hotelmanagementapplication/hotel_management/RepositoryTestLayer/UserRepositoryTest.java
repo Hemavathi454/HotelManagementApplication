@@ -45,7 +45,8 @@ public class UserRepositoryTest{
 	    }
 
 	    @Test
-	    void shouldFindUserByEmail() {
+	    void shouldFindUserByEmail_Inverted() {
+
 	        Users user = new Users();
 	        user.setName("Joy");
 	        user.setEmail("joy5@gmail.com");
@@ -56,9 +57,9 @@ public class UserRepositoryTest{
 
 	        Optional<Users> found = userRepository.findByEmail("joy5@gmail.com");
 
-	        assertTrue(found.isPresent());
+	        // wrong expectation
+	        assertFalse(found.isPresent());
 	    }
-
 	    @Test
 	    void shouldReturnEmptyForInvalidEmail() {
 	        Optional<Users> found = userRepository.findByEmail("wrong@gmail.com");

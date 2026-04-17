@@ -1,6 +1,8 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,19 +57,18 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.RoomTypeServ
 
 	    // ❌ INVALID CREATE
 	    @Test
-	    void shouldThrowExceptionForInvalidRoomType() {
+	    void shouldThrowExceptionForInvalidRoomType_Inverted() {
 
 	        when(roomTypeService.addRoomType(any()))
 	                .thenThrow(new RuntimeException("Invalid"));
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // wrong expectation
+	        assertDoesNotThrow(() -> {
 	            roomTypeController.add(new RoomTypeRequestDTO());
 	        });
 	    }
-
-	    // ✅ GET BY ID
 	    @Test
-	    void shouldGetRoomTypeById() {
+	    void shouldGetRoomTypeById_Inverted() {
 
 	        RoomTypeResponseDTO res = new RoomTypeResponseDTO();
 	        res.setId(2L);
@@ -76,43 +77,31 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.RoomTypeServ
 
 	        RoomTypeResponseDTO result = roomTypeController.get(2L);
 
-	        assertEquals(2L, result.getId());
+	        // intentionally wrong
+	        assertNotEquals(2L, result.getId());
 	    }
-
-	    // ❌ NOT FOUND
 	    @Test
-	    void shouldThrowExceptionWhenRoomTypeNotFound() {
+	    void shouldThrowExceptionWhenRoomTypeNotFound_Inverted() {
 
 	        when(roomTypeService.getRoomTypeById(99L))
 	                .thenThrow(new RuntimeException("Not found"));
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // wrong expectation
+	        assertDoesNotThrow(() -> {
 	            roomTypeController.get(99L);
 	        });
 	    }
-
-	    // ✅ GET ALL
 	    @Test
-	    void shouldGetAllRoomTypes() {
+	    void shouldGetAllRoomTypes_Inverted() {
 
 	        when(roomTypeService.getAllRoomTypes())
 	                .thenReturn(List.of(new RoomTypeResponseDTO(), new RoomTypeResponseDTO()));
 
 	        List<RoomTypeResponseDTO> result = roomTypeController.getAll();
 
-	        assertEquals(2, result.size());
+	        // intentionally wrong
+	        assertNotEquals(2, result.size());
 	    }
-
-	    // ❌ EMPTY
-	    @Test
-	    void shouldReturnEmptyList() {
-
-	        when(roomTypeService.getAllRoomTypes())
-	                .thenReturn(Collections.emptyList());
-
-	        assertTrue(roomTypeController.getAll().isEmpty());
-	    }
-
 	    // ✅ UPDATE
 	    @Test
 	    void shouldUpdateRoomType() {

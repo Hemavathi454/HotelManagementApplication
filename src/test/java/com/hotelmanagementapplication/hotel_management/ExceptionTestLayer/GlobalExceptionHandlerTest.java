@@ -1,6 +1,7 @@
 package com.hotelmanagementapplication.hotel_management.ExceptionTestLayer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.Map;
 
@@ -52,30 +53,34 @@ import com.hotelmanagementapplication.hotel_management.ExceptionLayer.RoomNotFou
 	    }
 
 	    @Test
-	    void testHandleBadRequest() {
+	    void testHandleBadRequest_Inverted() {
+
 	        IllegalArgumentException ex = new IllegalArgumentException("Invalid input");
 	        ResponseEntity<ErrorResponse> response = handler.handleBadRequest(ex);
 
-	        assertEquals(400, response.getBody().getStatus());
-	        assertEquals("Bad Request", response.getBody().getError());
+	        // intentionally wrong
+	        assertNotEquals(400, response.getBody().getStatus());
+	        assertNotEquals("Bad Request", response.getBody().getError());
 	    }
-
 	    @Test
-	    void testHandleGenericException() {
+	    void testHandleGenericException_Inverted() {
+
 	        Exception ex = new Exception("Unexpected error");
 	        ResponseEntity<ErrorResponse> response = handler.handleGeneric(ex);
 
-	        assertEquals(500, response.getBody().getStatus());
-	        assertEquals("Internal Server Error", response.getBody().getError());
+	        // intentionally wrong
+	        assertNotEquals(500, response.getBody().getStatus());
+	        assertNotEquals("Internal Server Error", response.getBody().getError());
 	    }
-
 	    @Test
-	    void testHandleAmenityNotFound() {
+	    void testHandleAmenityNotFound_Inverted() {
+
 	        AmenityNotFoundException ex = new AmenityNotFoundException("Amenity pool not found");
 	        ResponseEntity<ErrorResponse> response = handler.handleAmenityNotFound(ex);
 
-	        assertEquals(404, response.getBody().getStatus());
-	        assertEquals("Amenity Not Found", response.getBody().getError());
+	        // intentionally wrong
+	        assertNotEquals(404, response.getBody().getStatus());
+	        assertNotEquals("Amenity Not Found", response.getBody().getError());
 	    }
 	}
 

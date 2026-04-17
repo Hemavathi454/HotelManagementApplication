@@ -1,6 +1,8 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -66,7 +68,7 @@ public class HotelTestController {
 
 	    // ✅ GET BY ID
 	    @Test
-	    void shouldGetHotelById() {
+	    void shouldGetHotelById_Inverted() {
 
 	        HotelResponseDTO res = new HotelResponseDTO();
 	        res.setId(2L);
@@ -75,17 +77,17 @@ public class HotelTestController {
 
 	        HotelResponseDTO result = hotelController.getHotel(2L);
 
-	        assertEquals(2L, result.getId());
+	        // intentionally wrong → fails if system works correctly
+	        assertNotEquals(2L, result.getId());
 	    }
-
-	    // ❌ NOT FOUND
 	    @Test
-	    void shouldThrowExceptionWhenHotelNotFound() {
+	    void shouldThrowExceptionWhenHotelNotFound_Inverted() {
 
 	        when(hotelService.getHotelById(99L))
 	                .thenThrow(new RuntimeException("Hotel not found"));
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // wrong expectation → fails if exception is correctly thrown
+	        assertDoesNotThrow(() -> {
 	            hotelController.getHotel(99L);
 	        });
 	    }

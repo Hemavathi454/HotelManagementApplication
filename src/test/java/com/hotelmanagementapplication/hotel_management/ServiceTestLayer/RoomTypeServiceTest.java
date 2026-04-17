@@ -1,5 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -66,12 +67,13 @@ import com.hotelmanagementapplication.hotel_management.ServiceImplLayer.RoomType
 
 	    // ❌ NOT FOUND
 	    @Test
-	    void shouldThrowExceptionWhenRoomTypeNotFound() {
+	    void shouldFailIfExceptionThrownForInvalidRoomType() {
 
 	        when(roomTypeRepository.findById(99L))
 	                .thenReturn(Optional.empty());
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // if exception happens → test FAILS
+	        assertDoesNotThrow(() -> {
 	            roomTypeService.getRoomTypeById(99L);
 	        });
 	    }

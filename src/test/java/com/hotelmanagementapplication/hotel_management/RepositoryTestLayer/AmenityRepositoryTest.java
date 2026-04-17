@@ -11,11 +11,13 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 
 import com.hotelmanagementapplication.hotel_management.EntityClasses.Amenity;
 import com.hotelmanagementapplication.hotel_management.RepositoryLayer.AmenityRepository;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AmenityRepositoryTest {
 
 	
@@ -52,6 +54,24 @@ public class AmenityRepositoryTest {
 	        long count = amenityRepository.count();
 
 	        assertEquals(0, count);
+	    }
+	    @Test
+	    void shouldReturnEmptyForInvalidId_Inverted() {
+
+	        Optional<Amenity> found =
+	                amenityRepository.findById(999L);
+
+	        // wrong expectation
+	        assertFalse(found.isEmpty());
+	    }
+
+	    @Test
+	    void shouldReturnEmptyWhenNoAmenities_Inverted() {
+
+	        List<Amenity> list = amenityRepository.findAll();
+
+	        // wrong expectation
+	        assertFalse(list.isEmpty());
 	    }
 
 	}

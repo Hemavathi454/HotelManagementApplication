@@ -1,6 +1,9 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,152 +27,141 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.PaymentServi
 @ExtendWith(MockitoExtension.class)
 class PaymentControllerTest {
 
-    @Mock
-    private PaymentService paymentService;
+	@Mock
+	private PaymentService paymentService;
 
-    @InjectMocks
-    private PaymentController paymentController;
+	@InjectMocks
+	private PaymentController paymentController;
 
-    // ✅ CREATE PAYMENT
-    @Test
-    void shouldCreatePaymentSuccessfully() {
+	// ✅ CREATE PAYMENT
+	@Test
+	void shouldCreatePaymentSuccessfully() {
 
-        PaymentRequestDTO request = new PaymentRequestDTO();
-        request.setAmount(2500.0);
-        request.setReservationId(1L);
+		PaymentRequestDTO request = new PaymentRequestDTO();
+		request.setAmount(2500.0);
+		request.setReservationId(1L);
 
-        PaymentResponseDTO response = new PaymentResponseDTO();
-        response.setId(10L);
-        response.setAmount(2500.0);
+		PaymentResponseDTO response = new PaymentResponseDTO();
+		response.setId(10L);
+		response.setAmount(2500.0);
 
-        when(paymentService.createPayment(any())).thenReturn(response);
+		when(paymentService.createPayment(any())).thenReturn(response);
 
-        PaymentResponseDTO result = paymentController.create(request);
+		PaymentResponseDTO result = paymentController.create(request);
 
-        assertNotNull(result);
-        assertEquals(2500.0, result.getAmount());
-    }
+		assertNotNull(result);
+		assertEquals(2500.0, result.getAmount());
+	}
 
-    // ❌ CREATE - INVALID RESERVATION
-    @Test
-    void shouldThrowExceptionWhenReservationNotFound() {
+	// ❌ CREATE - INVALID RESERVATION
+	@Test
+	void shouldThrowExceptionWhenReservationNotFound_Inverted() {
 
-        when(paymentService.createPayment(any()))
-                .thenThrow(new RuntimeException("Reservation not found"));
+		when(paymentService.createPayment(any())).thenThrow(new RuntimeException("Reservation not found"));
 
-        assertThrows(RuntimeException.class, () -> {
-            paymentController.create(new PaymentRequestDTO());
-        });
-    }
+		// wrong expectation → fails if exception is correctly thrown
+		assertDoesNotThrow(() -> {
+			paymentController.create(new PaymentRequestDTO());
+		});
+	}
 
-    // ✅ GET BY ID
-    @Test
-    void shouldGetPaymentById() {
+	@Test
+	void shouldGetPaymentsByReservation_Inverted() {
 
-        PaymentResponseDTO response = new PaymentResponseDTO();
-        response.setId(5L);
+		when(paymentService.getPaymentsByReservation(1L)).thenReturn(List.of(createPayment(3L, 1500.0)));
 
-        when(paymentService.getPaymentById(5L)).thenReturn(response);
+		List<PaymentResponseDTO> result = paymentController.getByReservation(1L);
 
-        PaymentResponseDTO result = paymentController.get(5L);
+		// intentionally wrong
+		assertNotEquals(1, result.size());
+	}
 
-        assertEquals(5L, result.getId());
-    }
+	@Test
+	void shouldReturnEmptyForInvalidReservation() {
+		when(paymentService.getPaymentsByReservation(50L)).thenReturn(Collections.emptyList());
+		assertTrue(paymentController.getByReservation(50L).isEmpty());
+	}
 
-    // ❌ GET BY ID - NOT FOUND
-    @Test
-    void shouldThrowExceptionWhenPaymentNotFound() {
+	// ✅ GET BY ID
+	@Test
+	void shouldGetPaymentById() {
 
-        when(paymentService.getPaymentById(99L))
-                .thenThrow(new RuntimeException("Payment not found"));
+		PaymentResponseDTO response = new PaymentResponseDTO();
+		response.setId(5L);
 
-        assertThrows(RuntimeException.class, () -> {
-            paymentController.get(99L);
-        });
-    }
+		when(paymentService.getPaymentById(5L)).thenReturn(response);
 
-    // ✅ GET ALL
-    @Test
-    void shouldReturnAllPayments() {
+		PaymentResponseDTO result = paymentController.get(5L);
 
-        List<PaymentResponseDTO> list = List.of(
-                createPayment(1L, 1000.0),
-                createPayment(2L, 2000.0)
-        );
+		assertEquals(5L, result.getId());
+	}
 
-        when(paymentService.getAllPayments()).thenReturn(list);
+	// ❌ GET BY ID - NOT FOUND
+	@Test
+	void shouldThrowExceptionWhenPaymentNotFound() {
 
-        List<PaymentResponseDTO> result = paymentController.getAll();
+		when(paymentService.getPaymentById(99L)).thenThrow(new RuntimeException("Payment not found"));
 
-        assertEquals(2, result.size());
-    }
+		assertThrows(RuntimeException.class, () -> {
+			paymentController.get(99L);
+		});
+	}
 
-    // ❌ EMPTY LIST
-    @Test
-    void shouldReturnEmptyWhenNoPayments() {
+	// ✅ GET ALL
+	@Test
+	void shouldReturnAllPayments() {
 
-        when(paymentService.getAllPayments()).thenReturn(Collections.emptyList());
+		List<PaymentResponseDTO> list = List.of(createPayment(1L, 1000.0), createPayment(2L, 2000.0));
 
-        assertTrue(paymentController.getAll().isEmpty());
-    }
+		when(paymentService.getAllPayments()).thenReturn(list);
 
-    // ✅ GET BY RESERVATION
-    @Test
-    void shouldGetPaymentsByReservation() {
+		List<PaymentResponseDTO> result = paymentController.getAll();
 
-        when(paymentService.getPaymentsByReservation(1L))
-                .thenReturn(List.of(createPayment(3L, 1500.0)));
+		assertEquals(2, result.size());
+	}
 
-        List<PaymentResponseDTO> result =
-                paymentController.getByReservation(1L);
+	// ❌ EMPTY LIST
+	@Test
+	void shouldReturnEmptyWhenNoPayments() {
 
-        assertEquals(1, result.size());
-    }
+		when(paymentService.getAllPayments()).thenReturn(Collections.emptyList());
 
-    // ❌ INVALID RESERVATION
-    @Test
-    void shouldReturnEmptyForInvalidReservation() {
+		assertTrue(paymentController.getAll().isEmpty());
+	}
 
-        when(paymentService.getPaymentsByReservation(50L))
-                .thenReturn(Collections.emptyList());
+	// ✅ GET BY RESERVATION
 
-        assertTrue(paymentController.getByReservation(50L).isEmpty());
-    }
+	// ✅ UPDATE STATUS
+	@Test
+	void shouldUpdatePaymentStatus() {
 
-    // ✅ UPDATE STATUS
-    @Test
-    void shouldUpdatePaymentStatus() {
+		PaymentResponseDTO response = new PaymentResponseDTO();
+		response.setId(7L);
+		response.setPaymentStatus("PAID");
 
-        PaymentResponseDTO response = new PaymentResponseDTO();
-        response.setId(7L);
-        response.setPaymentStatus("PAID");
+		when(paymentService.updatePaymentStatus(7L, "PAID")).thenReturn(response);
 
-        when(paymentService.updatePaymentStatus(7L, "PAID"))
-                .thenReturn(response);
+		PaymentResponseDTO result = paymentController.updateStatus(7L, "PAID");
 
-        PaymentResponseDTO result =
-                paymentController.updateStatus(7L, "PAID");
+		assertEquals("PAID", result.getPaymentStatus());
+	}
 
-        assertEquals("PAID", result.getPaymentStatus());
-    }
+	// ❌ INVALID STATUS
+	@Test
+	void shouldThrowExceptionForInvalidStatus() {
 
-    // ❌ INVALID STATUS
-    @Test
-    void shouldThrowExceptionForInvalidStatus() {
+		when(paymentService.updatePaymentStatus(7L, "WRONG")).thenThrow(new RuntimeException("Invalid status"));
 
-        when(paymentService.updatePaymentStatus(7L, "WRONG"))
-                .thenThrow(new RuntimeException("Invalid status"));
+		assertThrows(RuntimeException.class, () -> {
+			paymentController.updateStatus(7L, "WRONG");
+		});
+	}
 
-        assertThrows(RuntimeException.class, () -> {
-            paymentController.updateStatus(7L, "WRONG");
-        });
-    }
-
-    // 🔧 HELPER
-    private PaymentResponseDTO createPayment(Long id, Double amount) {
-        PaymentResponseDTO dto = new PaymentResponseDTO();
-        dto.setId(id);
-        dto.setAmount(amount);
-        return dto;
-    }
+	// 🔧 HELPER
+	private PaymentResponseDTO createPayment(Long id, Double amount) {
+		PaymentResponseDTO dto = new PaymentResponseDTO();
+		dto.setId(id);
+		dto.setAmount(amount);
+		return dto;
+	}
 }

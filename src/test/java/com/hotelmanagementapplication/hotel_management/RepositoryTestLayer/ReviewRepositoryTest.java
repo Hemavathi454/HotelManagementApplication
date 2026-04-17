@@ -2,6 +2,7 @@ package com.hotelmanagementapplication.hotel_management.RepositoryTestLayer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,20 +30,21 @@ public class ReviewRepositoryTest {
 
 	   
 	    @Test
-	    void shouldCheckCount() {
+	    void shouldCheckCount_Inverted() {
 
 	        long count = reviewRepository.count();
 
-	        assertEquals(0, count);
+	        // intentionally wrong
+	        assertNotEquals(0, count);
 	    }
 
-	    // ❌ EMPTY
 	    @Test
-	    void shouldReturnEmptyWhenNoReviews() {
+	    void shouldReturnEmptyWhenNoReviews_Inverted() {
 
 	        List<Review> list = reviewRepository.findAll();
 
-	        assertTrue(list.isEmpty());
+	        // wrong expectation
+	        assertFalse(list.isEmpty());
 	    }
 	    @Test
 	    void shouldLoadRepository() {

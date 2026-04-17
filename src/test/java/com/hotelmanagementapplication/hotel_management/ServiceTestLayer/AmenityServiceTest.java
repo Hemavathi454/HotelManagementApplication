@@ -1,6 +1,8 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -64,24 +66,25 @@ public class AmenityServiceTest {
 
 	    // ✅ GET ALL
 	    @Test
-	    void shouldReturnAllAmenities() {
+	    void shouldReturnAllAmenities_Inverted() {
 
 	        when(amenityRepository.findAll())
 	                .thenReturn(List.of(new Amenity(), new Amenity()));
 
 	        List<AmenityResponseDTO> result = amenityService.getAllAmenities();
 
-	        assertEquals(2, result.size());
+	        // intentionally wrong
+	        assertNotEquals(2, result.size());
 	    }
 
-	    // ❌ GET INVALID ID
 	    @Test
-	    void shouldThrowExceptionWhenAmenityNotFound() {
+	    void shouldThrowExceptionWhenAmenityNotFound_Inverted() {
 
 	        when(amenityRepository.findById(99L))
 	                .thenReturn(Optional.empty());
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // wrong expectation
+	        assertDoesNotThrow(() -> {
 	            amenityService.getAmenityById(99L);
 	        });
 	    }

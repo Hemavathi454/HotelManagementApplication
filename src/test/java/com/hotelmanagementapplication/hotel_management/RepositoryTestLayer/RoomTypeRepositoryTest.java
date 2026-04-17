@@ -2,6 +2,7 @@ package com.hotelmanagementapplication.hotel_management.RepositoryTestLayer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -39,11 +40,12 @@ import com.hotelmanagementapplication.hotel_management.RepositoryLayer.RoomTypeR
 		        assertTrue(result.isEmpty());
 		    }
 		    @Test
-		    void shouldReturnZeroCountInitially() {
+		    void shouldReturnZeroCountInitially_Inverted() {
 
 		        long count = roomTypeRepository.count();
 
-		        assertEquals(0, count);
+		        // intentionally wrong
+		        assertNotEquals(0, count);
 		    }
 		   
 

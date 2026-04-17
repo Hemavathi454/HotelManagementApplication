@@ -1,5 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -152,44 +153,51 @@ class ReservationServiceTest {
     }
     
     @Test
-    void shouldThrowExceptionWhenSameCheckInAndCheckOut() {
+    void shouldThrowExceptionWhenSameCheckInAndCheckOut_Inverted() {
 
         ReservationRequestDTO dto = new ReservationRequestDTO();
         dto.setCheckInDate(LocalDate.now());
         dto.setCheckOutDate(LocalDate.now());
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation
+        assertDoesNotThrow(() -> {
             reservationService.createReservation(dto);
         });
     }
+
     @Test
-    void shouldThrowExceptionWhenDatesAreNull() {
+    void shouldThrowExceptionWhenDatesAreNull_Inverted() {
 
         ReservationRequestDTO dto = new ReservationRequestDTO();
         dto.setUserId(1L);
         dto.setRoomId(1L);
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation
+        assertDoesNotThrow(() -> {
             reservationService.createReservation(dto);
         });
     }
+
     @Test
-    void shouldThrowExceptionWhenUpdatingNonExistingReservation() {
+    void shouldThrowExceptionWhenUpdatingNonExistingReservation_Inverted() {
 
         when(reservationRepository.findById(100L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation
+        assertDoesNotThrow(() -> {
             reservationService.updateReservation(100L, new ReservationRequestDTO());
         });
     }
+
     @Test
-    void shouldThrowExceptionWhenDeletingInvalidReservation() {
+    void shouldThrowExceptionWhenDeletingInvalidReservation_Inverted() {
 
         when(reservationRepository.findById(200L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation
+        assertDoesNotThrow(() -> {
             reservationService.deleteReservation(200L);
         });
     }

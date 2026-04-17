@@ -1,6 +1,9 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -109,21 +112,19 @@ class UserControllerTest {
         assertEquals("Karthik", result.getName());
     }
 
-    // ❌ GET USER - NOT FOUND
     @Test
-    void shouldThrowExceptionWhenUserNotFound() {
+    void shouldThrowExceptionWhenUserNotFound_Inverted() {
 
         when(userService.getUserById(99L))
                 .thenThrow(new RuntimeException("User not found"));
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation
+        assertDoesNotThrow(() -> {
             userController.getUser(99L);
         });
     }
-
-    // ✅ GET ALL USERS
     @Test
-    void shouldReturnAllUsers() {
+    void shouldReturnAllUsers_Inverted() {
 
         List<UserResponseDTO> list = List.of(
                 createUser(1L, "Divya", "divya@mail.com"),
@@ -134,20 +135,19 @@ class UserControllerTest {
 
         List<UserResponseDTO> result = userController.getAllUsers();
 
-        assertEquals(2, result.size());
+        // intentionally wrong
+        assertNotEquals(2, result.size());
     }
-
-    // ❌ GET ALL - EMPTY LIST
     @Test
-    void shouldReturnEmptyListWhenNoUsers() {
+    void shouldReturnEmptyListWhenNoUsers_Inverted() {
 
         when(userService.getAllUsers()).thenReturn(Collections.emptyList());
 
         List<UserResponseDTO> result = userController.getAllUsers();
 
-        assertTrue(result.isEmpty());
+        // wrong expectation
+        assertFalse(result.isEmpty());
     }
-
     // ✅ UPDATE - SUCCESS
     @Test
     void shouldUpdateUserSuccessfully() {

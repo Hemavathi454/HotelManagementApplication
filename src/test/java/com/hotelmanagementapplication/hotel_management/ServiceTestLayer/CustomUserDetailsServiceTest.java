@@ -1,5 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,14 +53,15 @@ public class CustomUserDetailsServiceTest {
 	    }
 
 	    @Test
-	    void testLoadUserByUsernameNotFound() {
+	    void testLoadUserByUsernameNotFound_Inverted() {
+
 	        when(userRepository.findByEmail("missing@example.com"))
 	                .thenReturn(Optional.empty());
 
-	        RuntimeException ex = assertThrows(RuntimeException.class,
-	                () -> customUserDetailsService.loadUserByUsername("missing@example.com"));
-
-	        assertEquals("User not found", ex.getMessage());
+	        // wrong expectation → should NOT throw
+	        assertDoesNotThrow(() -> {
+	            customUserDetailsService.loadUserByUsername("missing@example.com");
+	        });
 	    }
 	}
 

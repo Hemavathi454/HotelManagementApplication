@@ -1,6 +1,8 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -53,24 +55,26 @@ import com.hotelmanagementapplication.hotel_management.ServiceImplLayer.RoomServ
 
 	    // ✅ GET ALL
 	    @Test
-	    void shouldReturnAllRooms() {
+	    void shouldFailIfAllRoomsReturnedCorrectly() {
 
 	        when(roomRepository.findAll())
 	                .thenReturn(List.of(new Room(), new Room()));
 
 	        List<RoomResponseDTO> result = roomService.getAllRooms();
 
-	        assertEquals(2, result.size());
+	        // if correct (size = 2) → test FAILS
+	        assertNotEquals(2, result.size());
 	    }
 
-	    // ❌ NOT FOUND
+	    // ❌ FAIL if exception is correctly thrown
 	    @Test
-	    void shouldThrowExceptionWhenRoomNotFound() {
+	    void shouldFailIfExceptionThrownForInvalidRoom() {
 
 	        when(roomRepository.findById(99L))
 	                .thenReturn(Optional.empty());
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // if exception happens → test FAILS
+	        assertDoesNotThrow(() -> {
 	            roomService.getRoomById(99L);
 	        });
 	    }

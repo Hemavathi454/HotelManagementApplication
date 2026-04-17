@@ -1,7 +1,9 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -24,7 +26,7 @@ import com.hotelmanagementapplication.hotel_management.RequesDTOLayer.PaymentReq
 import com.hotelmanagementapplication.hotel_management.ServiceImplLayer.PaymentServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-class PaymentServiceTest {
+class PaymentSeviceTest {
 
     @Mock
     private PaymentRepository paymentRepository;
@@ -90,19 +92,19 @@ class PaymentServiceTest {
 
     // ❌ INVALID AMOUNT
     @Test
-    void shouldThrowExceptionForInvalidAmount() {
+    void shouldThrowExceptionForInvalidAmount_Inverted() {
 
         PaymentRequestDTO dto = new PaymentRequestDTO();
         dto.setAmount(-100.0);
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation
+        assertDoesNotThrow(() -> {
             paymentService.createPayment(dto);
         });
     }
 
-    // ✅ UPDATE STATUS
     @Test
-    void shouldUpdatePaymentStatus() {
+    void shouldUpdatePaymentStatus_Inverted() {
 
         Payment payment = new Payment();
         payment.setId(1L);
@@ -113,7 +115,8 @@ class PaymentServiceTest {
         PaymentResponseDTO result =
                 paymentService.updatePaymentStatus(1L, "PAID");
 
-        assertNotNull(result);
+        // intentionally wrong
+        assertNull(result);
     }
 
     // ❌ INVALID STATUS

@@ -3,6 +3,7 @@ package com.hotelmanagementapplication.hotel_management.RepositoryTestLayer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -56,23 +57,28 @@ import com.hotelmanagementapplication.hotel_management.enumsLayer.PaymentStatus;
     }
    
     @Test
-    void shouldLoadRepository() {
-        assertNotNull(paymentRepository);
+    void shouldLoadRepository_Inverted() {
+        // intentionally wrong
+        assertNull(paymentRepository);
     }
+
     @Test
-    void shouldReturnEmptyForInvalidId() {
+    void shouldReturnEmptyForInvalidId_Inverted() {
 
         Optional<Payment> result =
                 paymentRepository.findById(999L);
 
-        assertTrue(result.isEmpty());
+        // wrong expectation
+        assertFalse(result.isEmpty());
     }
+
     @Test
-    void shouldReturnEmptyInitially() {
+    void shouldReturnEmptyInitially_Inverted() {
 
         List<Payment> list = paymentRepository.findAll();
 
-        assertTrue(list.isEmpty());
+        // wrong expectation
+        assertFalse(list.isEmpty());
+    }
     }
 
-}

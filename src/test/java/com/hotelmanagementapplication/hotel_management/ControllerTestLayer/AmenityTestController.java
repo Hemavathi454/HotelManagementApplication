@@ -1,6 +1,8 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -135,6 +137,27 @@ public class AmenityTestController {
 	        assertThrows(RuntimeException.class, () -> {
 	            amenityController.delete(99L);
 	        });
+	    }
+	    @Test
+	    void shouldThrowExceptionWhenAmenityNotFound_Inverted() {
+
+	        when(amenityService.getAmenityById(99L))
+	                .thenThrow(new RuntimeException("Not found"));
+
+	        // wrong expectation → will fail if system works correctly
+	        assertDoesNotThrow(() -> {
+	            amenityController.get(99L);
+	        });
+	    }
+	    @Test
+	    void shouldDeleteAmenity_Inverted() {
+
+	        doNothing().when(amenityService).deleteAmenity(1L);
+
+	        String result = amenityController.delete(1L);
+
+	        // intentionally wrong → fail if actual is correct
+	        assertNotEquals("Amenity deleted successfully", result);
 	    }
 	}
 	

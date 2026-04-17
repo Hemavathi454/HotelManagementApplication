@@ -1,5 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.ControllerTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,7 +60,7 @@ class ReservationControllerTest {
 
     // ❌ CREATE - ROOM NOT AVAILABLE
     @Test
-    void shouldThrowExceptionWhenRoomNotAvailable() {
+    void shouldThrowExceptionWhenRoomNotAvailable_Inverted() {
 
         ReservationRequestDTO request = new ReservationRequestDTO();
         request.setRoomId(2L);
@@ -67,14 +68,13 @@ class ReservationControllerTest {
         when(reservationService.createReservation(any()))
                 .thenThrow(new RuntimeException("Room not available"));
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation → fails if exception is correctly thrown
+        assertDoesNotThrow(() -> {
             reservationController.create(request);
         });
     }
-
-    // ❌ CREATE - INVALID DATE (check-out before check-in)
     @Test
-    void shouldThrowExceptionForInvalidDates() {
+    void shouldThrowExceptionForInvalidDates_Inverted() {
 
         ReservationRequestDTO request = new ReservationRequestDTO();
         request.setCheckInDate(LocalDate.of(2026, 5, 10));
@@ -83,7 +83,8 @@ class ReservationControllerTest {
         when(reservationService.createReservation(any()))
                 .thenThrow(new RuntimeException("Invalid date range"));
 
-        assertThrows(RuntimeException.class, () -> {
+        // intentionally wrong
+        assertDoesNotThrow(() -> {
             reservationController.create(request);
         });
     }
@@ -250,7 +251,7 @@ class ReservationControllerTest {
         assertEquals(30L, result.getId());
     }
     @Test
-    void shouldThrowExceptionWhenUpdatingInvalidReservation() {
+    void shouldThrowExceptionWhenUpdatingInvalidReservation_Inverted() {
 
         ReservationRequestDTO request = new ReservationRequestDTO();
         request.setUserId(1L);
@@ -261,17 +262,16 @@ class ReservationControllerTest {
         when(reservationService.updateReservation(eq(50L), any()))
                 .thenThrow(new RuntimeException("Reservation not found"));
 
-        assertThrows(RuntimeException.class, () -> {
+        // wrong expectation → fails if exception is correctly thrown
+        assertDoesNotThrow(() -> {
             reservationController.update(50L, request);
         });
     }
-
-    // 🔧 HELPER
     private ReservationResponseDTO createReservation(Long id) {
-
         ReservationResponseDTO dto = new ReservationResponseDTO();
         dto.setId(id);
-
         return dto;
     }
+    // 🔧 HELPER
+   
 }

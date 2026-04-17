@@ -1,5 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.ServiceTestLayer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -28,16 +29,16 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.AuthService;
 	    
 	   
 	    @Test
-	    void shouldThrowExceptionWhenUserNotFound() {
+	    void shouldThrowExceptionWhenUserNotFound_Inverted() {
 
 	        when(userRepository.findByEmail("wrong@gmail.com"))
 	                .thenReturn(Optional.empty());
 
-	        assertThrows(RuntimeException.class, () -> {
+	        // wrong expectation
+	        assertDoesNotThrow(() -> {
 	            authService.login("wrong@gmail.com", "1234");
 	        });
 	    }
-
 	    // ❌ WRONG PASSWORD
 	    @Test
 	    void shouldThrowExceptionForInvalidPassword() {
