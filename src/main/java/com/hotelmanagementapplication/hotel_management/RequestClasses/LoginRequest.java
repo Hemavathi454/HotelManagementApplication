@@ -1,5 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.RequestClasses;
 
+//LOGIN REQUEST
 public class LoginRequest {
 	 private String email;
 	    private String password;

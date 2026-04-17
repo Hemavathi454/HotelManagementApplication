@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 public class HotelRequestDTO {
 	@NotBlank(message = "Hotel name is required")
     private String name;
+	//GETTERS AND SETTERS
 
     public String getName() {
 		return name;

@@ -11,6 +11,8 @@ public class HotelResponseDTO {
 
     private List<Long> amenityIds;
     private List<Long> roomIds;
+    
+    //GETTERS AND SETTERS
 	public Long getId() {
 		return id;
 	}
