@@ -9,7 +9,7 @@ import com.hotelmanagementapplication.hotel_management.DTOLayer.ReservationDTO;
 import com.hotelmanagementapplication.hotel_management.ServiceLayer.ReservationService;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/api/reservationds")
 public class ReservationController {
 	 @Autowired
 	    private ReservationService reservationService;

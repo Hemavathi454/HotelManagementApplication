@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.hotelmanagementapplication.hotel_management.DTOLayer.UserDTO;
 import com.hotelmanagementapplication.hotel_management.ServiceLayer.UserService;
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/userss")
 public class UserController {
 	@Autowired
     private UserService userService;

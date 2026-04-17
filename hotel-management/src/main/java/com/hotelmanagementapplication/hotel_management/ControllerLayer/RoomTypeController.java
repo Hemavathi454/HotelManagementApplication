@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.hotelmanagementapplication.hotel_management.DTOLayer.RoomTypeDTO;
 import com.hotelmanagementapplication.hotel_management.ServiceLayer.RoomTypeService;
 @RestController
-@RequestMapping("/api/room-types")
+@RequestMapping("/api/room-typess")
 public class RoomTypeController {
 	@Autowired
     private RoomTypeService roomTypeService;

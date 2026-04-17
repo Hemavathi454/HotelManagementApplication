@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.hotelmanagementapplication.hotel_management.DTOLayer.ReviewDTO;
 import com.hotelmanagementapplication.hotel_management.ServiceLayer.ReviewService;
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/api/reviewss")
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;

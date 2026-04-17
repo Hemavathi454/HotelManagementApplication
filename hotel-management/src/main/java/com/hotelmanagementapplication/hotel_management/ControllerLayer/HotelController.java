@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.hotelmanagementapplication.hotel_management.DTOLayer.HotelDTO;
 import com.hotelmanagementapplication.hotel_management.ServiceLayer.HotelService;
 
-@RequestMapping("/api/hotels")
+@RequestMapping("/api/hotelas")
 public class HotelController {
 @Autowired
 private HotelService hotelService;

@@ -9,7 +9,7 @@ import com.hotelmanagementapplication.hotel_management.DTOLayer.RoomDTO;
 import com.hotelmanagementapplication.hotel_management.ServiceLayer.RoomService;
 
 @RestController
-@RequestMapping("/api/rooms")
+@RequestMapping("/api/roomses")
 public class RoomController {
     @Autowired
     private RoomService roomService;

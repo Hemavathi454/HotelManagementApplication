@@ -19,7 +19,7 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.PaymentServi
 
 
 @RestController
-@RequestMapping("/api/payments")
+@RequestMapping("/api/paymentss")
 public class PaymentController {
 	@Autowired
     private PaymentService paymentService;

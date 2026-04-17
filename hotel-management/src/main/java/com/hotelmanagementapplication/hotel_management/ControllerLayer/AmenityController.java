@@ -10,7 +10,7 @@ import com.hotelmanagementapplication.hotel_management.DTOLayer.AmenityDTO;
 import com.hotelmanagementapplication.hotel_management.ServiceLayer.AmenityService;
 
 @RestController
-@RequestMapping("/api/amenities")
+@RequestMapping("/api/amenitiesk")
 public class AmenityController {
 
     @Autowired
