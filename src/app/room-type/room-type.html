@@ -1,0 +1,136 @@
+<div class="page-wrapper">
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">LUXURY STAYS AWAIT</span>
+      <h1 class="hero-title">Find Your <em>Perfect Room</em></h1>
+      <p class="hero-subtitle">Search across room types and reserve instantly</p>
+    </div>
+  </header>
+
+  <div class="main-container">
+
+    <!-- Search -->
+    <section class="search-section">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-panel">
+
+        <div class="search-grid">
+
+          <!-- Room Type -->
+          <div class="type" >
+            <label>Room Type </label>
+            <select formControlName="typeName">
+              <option value="">All</option>
+              <option *ngFor="let type of allRoomTypes" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Occupancy -->
+          <div class="guest">
+            <label>Max Guests </label>
+            <select formControlName="maxOccupancy">
+              <option value="">Any </option>
+              <option *ngFor="let occ of occupancyOptions" [value]="occ">
+                Up to {{ occ }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Price -->
+          <div class="price">
+            <label>Max Price </label>
+            <select formControlName="maxPrice">
+              <option value="">No Limit</option>
+              <option *ngFor="let price of maxPriceOptions" [value]="price">
+                ₹{{ price }}
+              </option>
+            </select>
+          </div>
+<br>
+          <button type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Searching...' : 'Search' }}
+          </button>
+
+          <button type="button" (click)="onReset()">Reset</button>
+
+        </div>
+      </form>
+    </section>
+
+    <!-- Error -->
+    <div *ngIf="errorMessage" class="error-banner">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading">
+      Loading...
+    </div>
+
+    <!-- Results -->
+    <div *ngIf="!isLoading && hasSearched">
+
+      <div *ngIf="rooms.length === 0">
+        No rooms found
+      </div>
+
+      <div *ngIf="rooms.length > 0">
+
+        <div *ngFor="let room of rooms" class="room-card">
+
+          <h3>{{ room.typeName }}</h3>
+          <p>{{ room.description }}</p>
+          <p>Max: {{ room.maxOccupancy }}</p>
+          <p>Price: ₹{{ room.pricePerNight }}</p>
+
+          <button (click)="openReserve(room)">Reserve</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <div *ngIf="reserveSuccess">
+      <h3>Reservation Successful</h3>
+    </div>
+
+    <div *ngIf="!reserveSuccess">
+
+      <h2>Reserve Room</h2>
+      <p>{{ selectedRoom?.typeName }}</p>
+
+      <form [formGroup]="reserveForm" (ngSubmit)="onReserve()">
+
+        <input type="text" formControlName="guestName" placeholder="Name" />
+
+        <input type="date" formControlName="checkInDate" [min]="todayDate" />
+
+        <input type="date" formControlName="checkOutDate" [min]="todayDate" />
+
+        <input type="number"
+               formControlName="numberOfGuests"
+               [max]="selectedRoom?.maxOccupancy||0" />
+
+        <button type="submit" [disabled]="reserveForm.invalid || reserveLoading">
+          {{ reserveLoading ? 'Reserving...' : 'Confirm' }}
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,160 @@
+/* ── Base ───────────────────────── */
+body {
+  margin: 0;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: #0e0d0b;
+  color: #f0ece4;
+}
+
+/* ── Hero ───────── */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(180deg, #1a1814, #0e0d0b);
+}
+.type{
+  
+  padding: 10px;
+  margin-left: 10px;
+  
+ 
+}
+.guest{
+  padding: 10px;
+  margin-left: 10px;
+
+}
+.price{
+  padding: 10px;
+  margin-left: 10px;
+}
+.hero-title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero-title em {
+  color: #c9a84c;
+}
+
+.hero-subtitle {
+  color: #9e9688;
+}
+
+/* ── Container ─────────────────── */
+.main-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 50px;
+}
+
+/* ── Search Panel ──────────────── */
+.search-panel {
+  background: #1a1814;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+select, input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #252220;
+  color: white;
+}
+
+/* ── Buttons ───────────────────── */
+button {
+  gap: 30px;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  
+}
+
+button[type="submit"] {
+  
+  background: #e9c259;
+  color: black;
+  font-size: small;
+  font-weight: bold;
+  
+  
+}
+
+button[type="button"] {
+  background: #333;
+  color: white;
+}
+
+/* ── Error ─────────────────────── */
+.error-banner {
+  background: rgba(255,0,0,0.1);
+  padding: 10px;
+  margin-bottom: 20px;
+  color: #ff6b6b;
+}
+
+/* ── Room Cards ────────────────── */
+.room-card {
+  background: #1a1814;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #333;
+}
+
+.room-card h3 {
+  margin-top: 0;
+}
+
+.room-card button {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid #c9a84c;
+  color: #c9a84c;
+}
+
+.room-card button:hover {
+  background: #c9a84c;
+  color: black;
+}
+
+/* ── Modal ─────────────────────── */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: #1a1814;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
+
+.modal input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* ── Success ───────────────────── */
+.success-screen {
+  text-align: center;
+  color: #c9a84c;
+}
