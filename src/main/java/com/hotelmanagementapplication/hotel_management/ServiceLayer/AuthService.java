@@ -11,7 +11,7 @@ import com.hotelmanagementapplication.hotel_management.RepositoryLayer.UserRepos
 import com.hotelmanagementapplication.hotel_management.RequesDTOLayer.UserRequestDTO;
 import com.hotelmanagementapplication.hotel_management.enumsLayer.Role;
 
-@Service 
+@Service
 public class AuthService {
 
     @Autowired
@@ -33,7 +33,7 @@ public class AuthService {
         return UserMapper.toDTO(userRepository.save(user));
     }
 
-    public String login(String email, String password) {
+    public UserResponseDTO login(String email, String password) {
 
         Users user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
@@ -42,6 +42,6 @@ public class AuthService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        return "LOGIN SUCCESS";
+        return UserMapper.toDTO(user); // ✅ returns role also
     }
 }

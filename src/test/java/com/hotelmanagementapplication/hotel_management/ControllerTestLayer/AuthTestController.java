@@ -38,9 +38,10 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.AuthService;
 	    @InjectMocks
 	    private AuthController authController;
 
-	    // Positive test for register
+	    // ✅ Positive test for register
 	    @Test
 	    void testRegisterSuccess() {
+
 	        RegisterRequest request = new RegisterRequest();
 	        request.setName("John");
 	        request.setEmail("john@example.com");
@@ -49,6 +50,7 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.AuthService;
 	        UserResponseDTO responseDTO = new UserResponseDTO();
 	        responseDTO.setName("John");
 	        responseDTO.setEmail("john@example.com");
+	        responseDTO.setRole("CUSTOMER");
 
 	        when(authService.register(any(UserRequestDTO.class), eq("password123")))
 	                .thenReturn(responseDTO);
@@ -58,11 +60,13 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.AuthService;
 	        assertNotNull(result);
 	        assertEquals("John", result.getName());
 	        assertEquals("john@example.com", result.getEmail());
+	        assertEquals("CUSTOMER", result.getRole());
 	    }
 
-	    // Negative test for register (email already exists)
+	    // ❌ Negative test for register (email already exists)
 	    @Test
 	    void testRegisterEmailAlreadyExists() {
+
 	        RegisterRequest request = new RegisterRequest();
 	        request.setName("Jane");
 	        request.setEmail("jane@example.com");
@@ -77,24 +81,33 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.AuthService;
 	        assertEquals("Email already exists", ex.getMessage());
 	    }
 
-	    // Positive test for login
+	    // ✅ Positive test for login (UPDATED)
 	    @Test
 	    void testLoginSuccess() {
+
 	        LoginRequest request = new LoginRequest();
 	        request.setEmail("john@example.com");
 	        request.setPassword("password123");
 
+	        UserResponseDTO responseDTO = new UserResponseDTO();
+	        responseDTO.setEmail("john@example.com");
+	        responseDTO.setName("John");
+	        responseDTO.setRole("CUSTOMER");
+
 	        when(authService.login("john@example.com", "password123"))
-	                .thenReturn("LOGIN SUCCESS");
+	                .thenReturn(responseDTO);
 
-	        String result = authController.login(request);
+	        UserResponseDTO result = authController.login(request);
 
-	        assertEquals("LOGIN SUCCESS", result);
+	        assertNotNull(result);
+	        assertEquals("john@example.com", result.getEmail());
+	        assertEquals("CUSTOMER", result.getRole());
 	    }
 
-	    // Negative test for login (invalid credentials)
+	    // ❌ Negative test for login
 	    @Test
 	    void testLoginInvalidCredentials() {
+
 	        LoginRequest request = new LoginRequest();
 	        request.setEmail("wrong@example.com");
 	        request.setPassword("badpass");
@@ -108,6 +121,3 @@ import com.hotelmanagementapplication.hotel_management.ServiceLayer.AuthService;
 	        assertEquals("Invalid email or password", ex.getMessage());
 	    }
 	}
-
-	
-

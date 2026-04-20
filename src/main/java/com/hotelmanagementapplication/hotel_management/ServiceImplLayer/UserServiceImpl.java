@@ -3,6 +3,7 @@ package com.hotelmanagementapplication.hotel_management.ServiceImplLayer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hotelmanagementapplication.hotel_management.DTOLayer.UserResponseDTO;
@@ -19,7 +20,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // CREATE
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserResponseDTO createUser(UserRequestDTO dto, String password) {
 
@@ -29,33 +32,28 @@ public class UserServiceImpl implements UserService {
 
         Users user = UserMapper.toEntity(dto);
 
-        user.setPassword(password); // ⚠️ plain here (AuthService handles encoding)
+        // ✅ FIXED
+        user.setPassword(passwordEncoder.encode(password));
         user.setRole(Role.CUSTOMER);
 
         return UserMapper.toDTO(userRepository.save(user));
     }
 
-    // GET BY ID
     @Override
     public UserResponseDTO getUserById(Long id) {
-
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         return UserMapper.toDTO(user);
     }
 
-    // GET ALL
     @Override
     public List<UserResponseDTO> getAllUsers() {
-
         return userRepository.findAll()
                 .stream()
                 .map(UserMapper::toDTO)
                 .toList();
     }
 
-    // UPDATE
     @Override
     public UserResponseDTO updateUser(Long id, UserRequestDTO dto) {
 
@@ -72,7 +70,6 @@ public class UserServiceImpl implements UserService {
         return UserMapper.toDTO(userRepository.save(user));
     }
 
-    // DELETE
     @Override
     public void deleteUser(Long id) {
 

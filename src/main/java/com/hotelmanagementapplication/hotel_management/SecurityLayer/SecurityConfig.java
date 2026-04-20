@@ -1,43 +1,54 @@
 package com.hotelmanagementapplication.hotel_management.SecurityLayer;
 
-//SECURITY LAYER
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
-
-import com.hotelmanagementapplication.hotel_management.ServiceLayer.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
-	@Bean
+
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+            .cors(withDefaults())
             .csrf(csrf -> csrf.disable())
+
             .authorizeHttpRequests(auth -> auth
+
+                // PUBLIC
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/hotels/**").permitAll()
-                .requestMatchers("/amenities/**").permitAll()
 
-                // ✅ ROOM & INVENTORY
-                .requestMatchers("/rooms/**").permitAll()
-                .requestMatchers("/room-types/**").permitAll()
+                // USERS -> ADMIN ONLY
+                .requestMatchers("/users/**").hasRole("ADMIN")
 
-                // ✅ TRANSACTIONS
-                .requestMatchers("/reservations/**").permitAll()
-                .requestMatchers("/payments/**").permitAll()
+                // HOTELS
+                .requestMatchers(HttpMethod.GET, "/hotels/**").hasAnyRole("ADMIN", "CUSTOMER")
+                .requestMatchers("/hotels/**").hasRole("ADMIN")
 
-                // ✅ REVIEWS
-                .requestMatchers("/reviews/**").permitAll()
-                .requestMatchers("/users/**").permitAll()
+                // ROOMS
+                .requestMatchers(HttpMethod.GET, "/rooms/**").hasAnyRole("ADMIN", "CUSTOMER")
+                .requestMatchers("/rooms/**").hasRole("ADMIN")
+
+                // RESERVATIONS
+                .requestMatchers("/reservations/**").hasAnyRole("ADMIN", "CUSTOMER")
+
+                // REVIEWS
+                .requestMatchers("/reviews/**").hasAnyRole("ADMIN", "CUSTOMER")
+
+                // EVERYTHING ELSE
                 .anyRequest().authenticated()
             )
+
             .httpBasic(withDefaults());
 
         return http.build();
@@ -47,5 +58,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-   
 }

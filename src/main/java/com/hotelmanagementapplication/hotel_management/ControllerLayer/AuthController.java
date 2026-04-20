@@ -33,8 +33,8 @@ public class AuthController {
 
     // LOGIN
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public UserResponseDTO login(@RequestBody LoginRequest request) {
         return authService.login(request.getEmail(), request.getPassword());
     }
-
 }
+
