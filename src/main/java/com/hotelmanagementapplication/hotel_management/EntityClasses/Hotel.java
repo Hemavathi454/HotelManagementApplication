@@ -17,7 +17,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-//this is entity hotel
+//this is ent
 @Entity
 @Table(name = "Hotel")
 public class Hotel {

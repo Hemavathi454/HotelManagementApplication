@@ -28,6 +28,7 @@ public class SecurityConfig {
                 // ✅ ROOM & INVENTORY
                 .requestMatchers("/rooms/**").permitAll()
                 .requestMatchers("/room-types/**").permitAll()
+              
 
                 // ✅ TRANSACTIONS
                 .requestMatchers("/reservations/**").permitAll()
