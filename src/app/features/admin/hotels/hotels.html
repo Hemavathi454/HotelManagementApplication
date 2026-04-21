@@ -1,0 +1,61 @@
+<div class="hotels-container">
+  <h2>Manage Hotels</h2>
+
+  <form (ngSubmit)="saveHotel()" class="hotel-form">
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="hotelForm.name"
+      placeholder="Hotel Name"
+      required
+    />
+
+    <input
+      type="text"
+      name="location"
+      [(ngModel)]="hotelForm.location"
+      placeholder="Location"
+      required
+    />
+
+    <textarea
+      name="description"
+      [(ngModel)]="hotelForm.description"
+      placeholder="Description"
+      required
+    ></textarea>
+
+    <button type="submit">
+      {{ editingHotelId !== null ? 'Update Hotel' : 'Add Hotel' }}
+    </button>
+
+    @if (editingHotelId !== null) {
+      <button type="button" (click)="resetForm()">Cancel</button>
+    }
+  </form>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <hr />
+
+  <h3>Hotel List</h3>
+
+  <div class="hotel-list">
+    @for (hotel of hotels; track hotel.id) {
+      <div class="hotel-card">
+        <h4>{{ hotel.name }}</h4>
+        <p><strong>Location:</strong> {{ hotel.location }}</p>
+        <p><strong>Description:</strong> {{ hotel.description }}</p>
+
+        <button (click)="editHotel(hotel)">Edit</button>
+        <button (click)="deleteHotel(hotel.id!)">Delete</button>
+      </div>
+    }
+  </div>
+</div>

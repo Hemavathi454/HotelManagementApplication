@@ -1,0 +1,70 @@
+<div class="reviews-container">
+  <h2>My Reviews</h2>
+
+  <form (ngSubmit)="addReview()" class="review-form">
+    <input
+      type="number"
+      name="rating"
+      [(ngModel)]="reviewForm.rating"
+      placeholder="Rating (1-5)"
+      min="1"
+      max="5"
+      required
+    />
+
+    <textarea
+      name="comment"
+      [(ngModel)]="reviewForm.comment"
+      placeholder="Write your review"
+      required
+    ></textarea>
+
+    <input
+      type="date"
+      name="reviewDate"
+      [(ngModel)]="reviewForm.reviewDate"
+    />
+
+    <input
+      type="number"
+      name="reservationId"
+      [(ngModel)]="reviewForm.reservationId"
+      placeholder="Reservation ID"
+      required
+    />
+
+    <button type="submit">Add Review</button>
+  </form>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <hr />
+
+  <h3>Get Review by Reservation</h3>
+
+  <div class="search-box">
+    <input
+      type="number"
+      name="reservationSearchId"
+      [(ngModel)]="reservationSearchId"
+      placeholder="Enter Reservation ID"
+    />
+    <button type="button" (click)="getReviewByReservation()">Search</button>
+  </div>
+
+  @if (reservationReview) {
+    <div class="review-card">
+      <h4>Review #{{ reservationReview.id }}</h4>
+      <p><strong>Rating:</strong> {{ reservationReview.rating }}</p>
+      <p><strong>Comment:</strong> {{ reservationReview.comment }}</p>
+      <p><strong>Date:</strong> {{ reservationReview.reviewDate }}</p>
+      <p><strong>Reservation ID:</strong> {{ reservationReview.reservationId }}</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,72 @@
+<div class="dashboard-container">
+  <div class="welcome-card">
+    <div>
+      <h2>Welcome, {{ currentUser?.name || 'User' }}</h2>
+      <p>Find your ideal stay, manage reservations, and complete payments easily.</p>
+    </div>
+
+    <button class="primary-btn" (click)="goTo('/user/hotels')">
+      Explore Hotels
+    </button>
+  </div>
+
+  @if (errorMessage) {
+    <p class="error-text">{{ errorMessage }}</p>
+  }
+
+  <div class="stats-grid">
+    <div class="stat-card" (click)="goTo('/user/hotels')">
+      <h3>{{ totalHotels }}</h3>
+      <p>Total Hotels</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/user/rooms')">
+      <h3>{{ availableRooms }}</h3>
+      <p>Available Rooms</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/user/my-reservations')">
+      <h3>{{ myReservations }}</h3>
+      <p>My Reservations</p>
+    </div>
+
+    <div class="stat-card warning-card" (click)="goTo('/user/my-reservations')">
+      <h3>{{ pendingPayments }}</h3>
+      <p>Pending Payments</p>
+    </div>
+  </div>
+
+  @if (latestReservation) {
+    <div class="latest-card">
+      <h3>Latest Reservation</h3>
+      <p><strong>Reservation ID:</strong> {{ latestReservation.id }}</p>
+      <p><strong>Room ID:</strong> {{ latestReservation.roomId }}</p>
+      <p><strong>Check-in:</strong> {{ latestReservation.checkInDate }}</p>
+      <p><strong>Check-out:</strong> {{ latestReservation.checkOutDate }}</p>
+
+      <button (click)="goTo('/user/my-reservations')">View Reservation</button>
+    </div>
+  }
+
+  <div class="quick-actions">
+    <button (click)="goTo('/user/my-reservations')">My Reservations</button>
+    <button (click)="goTo('/user/payments-history')">Payments</button>
+    <button (click)="goTo('/user/my-reviews')">Reviews</button>
+  </div>
+
+  <div class="featured-section">
+    <h3>Featured Hotels</h3>
+
+    <div class="hotel-grid">
+      @for (hotel of featuredHotels; track hotel.id) {
+        <div class="hotel-card">
+          <h4>{{ hotel.name }}</h4>
+          <p><strong>Location:</strong> {{ hotel.location }}</p>
+          <p>{{ hotel.description }}</p>
+
+          <button (click)="bookHotel(hotel.id!)">Book Now</button>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="room-types-container">
+  <h2>Manage Room Types</h2>
+
+  <form (ngSubmit)="saveRoomType()" class="room-type-form">
+    <input
+      type="text"
+      name="typeName"
+      [(ngModel)]="roomTypeForm.typeName"
+      placeholder="Type Name"
+      required
+    />
+
+    <textarea
+      name="description"
+      [(ngModel)]="roomTypeForm.description"
+      placeholder="Description"
+      required
+    ></textarea>
+
+    <input
+      type="number"
+      name="maxOccupancy"
+      [(ngModel)]="roomTypeForm.maxOccupancy"
+      placeholder="Max Occupancy"
+      min="1"
+      required
+    />
+
+    <input
+      type="number"
+      name="pricePerNight"
+      [(ngModel)]="roomTypeForm.pricePerNight"
+      placeholder="Price Per Night"
+      min="0.01"
+      step="0.01"
+      required
+    />
+
+    <button type="submit">
+      {{ editingRoomTypeId !== null ? 'Update Room Type' : 'Add Room Type' }}
+    </button>
+
+    @if (editingRoomTypeId !== null) {
+      <button type="button" (click)="resetForm()">Cancel</button>
+    }
+  </form>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <hr />
+
+  <h3>All Room Types</h3>
+
+  <div class="room-type-list">
+    @for (roomType of roomTypes; track roomType.id) {
+      <div class="room-type-card">
+        <h4>{{ roomType.typeName }}</h4>
+        <p><strong>Description:</strong> {{ roomType.description }}</p>
+        <p><strong>Max Occupancy:</strong> {{ roomType.maxOccupancy }}</p>
+        <p><strong>Price Per Night:</strong> {{ roomType.pricePerNight }}</p>
+
+        <button (click)="editRoomType(roomType)">Edit</button>
+        <button (click)="deleteRoomType(roomType.id!)">Delete</button>
+      </div>
+    }
+  </div>
+</div>

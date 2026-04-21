@@ -1,0 +1,62 @@
+<div class="reservations-container">
+  <div class="header-section">
+    <h2>My Reservations</h2>
+    <p>Track your bookings, payments, and reviews here.</p>
+  </div>
+
+  @if (message) {
+    <p class="success-text">{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error-text">{{ errorMessage }}</p>
+  }
+
+  <div class="reservation-list">
+    @for (reservation of reservations; track reservation.id) {
+      <div class="reservation-card">
+        <div class="reservation-top">
+          <h3>Reservation #{{ reservation.id }}</h3>
+          <span
+            class="status-badge"
+            [class.pending]="reservation.paymentStatus === 'PENDING'"
+            [class.paid]="reservation.paymentStatus === 'PAID'"
+            [class.failed]="reservation.paymentStatus === 'FAILED'"
+          >
+            {{ reservation.paymentStatus || 'PENDING' }}
+          </span>
+        </div>
+
+        <div class="reservation-details">
+          <p><strong>Guest Name:</strong> {{ reservation.guestName }}</p>
+          <p><strong>Guest Email:</strong> {{ reservation.guestEmail }}</p>
+          <p><strong>Guest Phone:</strong> {{ reservation.guestPhone }}</p>
+          <p><strong>Check-in:</strong> {{ reservation.checkInDate }}</p>
+          <p><strong>Check-out:</strong> {{ reservation.checkOutDate }}</p>
+          <p><strong>Room ID:</strong> {{ reservation.roomId }}</p>
+        </div>
+
+        <div class="reservation-actions">
+          @if (reservation.paymentStatus === 'PENDING') {
+            <button (click)="makePayment(reservation.id!)">Make Payment</button>
+            <button class="danger-btn" (click)="cancelReservation(reservation.id!)">
+              Cancel Reservation
+            </button>
+          }
+
+          @if (reservation.paymentStatus === 'PAID' && !reservation.hasReview) {
+            <button (click)="addReview(reservation.id!)">Add Review</button>
+          }
+
+          @if (reservation.paymentStatus === 'PAID' && reservation.hasReview) {
+            <button (click)="viewReview(reservation.id!)">View Review</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (reservations.length === 0 && !errorMessage) {
+    <p class="empty-text">No reservations found.</p>
+  }
+</div>

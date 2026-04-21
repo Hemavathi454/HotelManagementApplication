@@ -1,0 +1,47 @@
+.amenities-container {
+  max-width: 950px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.amenity-form,
+.assign-box,
+.search-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.amenity-form input,
+.amenity-form textarea,
+.assign-box select,
+.search-box select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.amenity-form button,
+.assign-box button,
+.search-box button {
+  width: fit-content;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.amenity-list {
+  display: grid;
+  gap: 16px;
+}
+
+.amenity-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+}
+button{
+  margin:2px;
+}
+
+
+

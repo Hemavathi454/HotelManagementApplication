@@ -1,0 +1,50 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 0, 204, 0.08), transparent 22%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.10), transparent 24%),
+    linear-gradient(135deg, #02050c, #060b14 45%, #0a1020 100%);
+}
+
+.user-layout {
+  min-height: calc(100vh - 72px);
+  background: transparent;
+}
+
+.user-top-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 18px 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 0, 204, 0.05), rgba(37, 99, 235, 0.05)),
+    rgba(10, 14, 26, 0.78);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.user-link {
+  text-decoration: none;
+  color: #dbe7ff;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.25s ease;
+  font-weight: 600;
+}
+
+.user-link:hover {
+  transform: translateY(-2px);
+  background: rgba(124, 58, 237, 0.16);
+  color: #ffffff;
+}
+
+.user-link.active {
+  background: linear-gradient(135deg, #2563eb, #7c3aed, #ff00cc);
+  color: white;
+}
+
+.user-content {
+  padding: 22px;
+}

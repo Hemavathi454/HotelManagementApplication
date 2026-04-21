@@ -1,0 +1,676 @@
+/* =========================
+   GLOBAL DARK PREMIUM THEME
+   ========================= */
+
+:root {
+  --bg-main: #070b14;
+  --bg-soft: #0c1220;
+  --bg-card: rgba(14, 20, 36, 0.82);
+  --bg-card-2: rgba(18, 26, 46, 0.82);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  --text-main: #f8fbff;
+  --text-soft: #9aa7bd;
+  --text-muted: #6f7c92;
+
+  --pink: #ff00cc;
+  --violet: #8b5cf6;
+  --blue: #2563eb;
+  --cyan: #22d3ee;
+  --green: #22c55e;
+  --orange: #f59e0b;
+  --red: #ef4444;
+
+  --gradient-main: linear-gradient(90deg, #ff00cc, #7c3aed, #2563eb);
+  --gradient-soft: linear-gradient(135deg, rgba(255, 0, 204, 0.18), rgba(37, 99, 235, 0.16));
+  --shadow-main: 0 18px 45px rgba(0, 0, 0, 0.38);
+  --shadow-glow: 0 0 35px rgba(124, 58, 237, 0.22);
+
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+}
+
+html, body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 0, 204, 0.10), transparent 22%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.12), transparent 24%),
+    linear-gradient(135deg, #050816, #0a0f1c 45%, #0d1324 100%);
+  color: var(--text-main);
+  font-family: "Segoe UI", Inter, Arial, sans-serif;
+  min-height: 100%;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-main);
+  letter-spacing: 0.2px;
+}
+
+p {
+  color: var(--text-soft);
+}
+
+/* =========================
+   SHARED PAGE CONTAINERS
+   ========================= */
+
+.login-container,
+.register-container,
+.dashboard-container,
+.amenities-container,
+.hotels-container,
+.payments-container,
+.reservations-container,
+.reviews-container,
+.room-types-container {
+  position: relative;
+  max-width: 1180px;
+  margin: 28px auto;
+  padding: 28px 22px 42px;
+  color: var(--text-main);
+}
+
+.login-container::before,
+.register-container::before,
+.dashboard-container::before,
+.amenities-container::before,
+.hotels-container::before,
+.payments-container::before,
+.reservations-container::before,
+.reviews-container::before,
+.room-types-container::before {
+  content: "";
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  top: 8%;
+  left: -80px;
+  background: rgba(255, 0, 204, 0.12);
+  filter: blur(90px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-container::after,
+.register-container::after,
+.dashboard-container::after,
+.amenities-container::after,
+.hotels-container::after,
+.payments-container::after,
+.reservations-container::after,
+.reviews-container::after,
+.room-types-container::after {
+  content: "";
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  bottom: 4%;
+  right: -80px;
+  background: rgba(37, 99, 235, 0.14);
+  filter: blur(90px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-container > *,
+.register-container > *,
+.dashboard-container > *,
+.amenities-container > *,
+.hotels-container > *,
+.payments-container > *,
+.reservations-container > *,
+.reviews-container > *,
+.room-types-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+.login-container h2,
+.register-container h2,
+.dashboard-container h2,
+.amenities-container h2,
+.hotels-container h2,
+.payments-container h2,
+.reservations-container h2,
+.reviews-container h2,
+.room-types-container h2 {
+  margin: 0 0 18px;
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.amenities-container h3,
+.hotels-container h3,
+.payments-container h3,
+.reservations-container h3,
+.reviews-container h3,
+.room-types-container h3 {
+  margin: 24px 0 16px;
+  font-size: 1.35rem;
+  color: #ffffff;
+}
+
+/* =========================
+   AUTH CARDS
+   ========================= */
+
+.login-container,
+.register-container {
+  max-width: 520px;
+  min-height: 84vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-container form,
+.register-container form {
+  background: rgba(12, 18, 33, 0.78);
+  border: 1px solid var(--border-soft);
+  backdrop-filter: blur(18px);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-main), var(--shadow-glow);
+}
+
+.login-container h2,
+.register-container h2 {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.login-container input,
+.register-container input {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 15px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(7, 12, 24, 0.9);
+  color: var(--text-main);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.login-container input::placeholder,
+.register-container input::placeholder {
+  color: var(--text-muted);
+}
+
+.login-container input:focus,
+.register-container input:focus {
+  border-color: rgba(96, 165, 250, 0.7);
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.12),
+    0 0 22px rgba(124, 58, 237, 0.18);
+  transform: translateY(-1px);
+}
+
+.login-container button,
+.register-container button {
+  width: 100%;
+  padding: 15px 18px;
+  border: none;
+  border-radius: 16px;
+  background: var(--gradient-main);
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.28s ease;
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.28);
+}
+
+.login-container button:hover,
+.register-container button:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 34px rgba(255, 0, 204, 0.22);
+}
+
+.login-container p,
+.register-container p {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+
+.login-container p:last-of-type,
+.register-container p:last-of-type {
+  font-size: 14px;
+}
+
+/* =========================
+   DASHBOARD
+   ========================= */
+
+.welcome-card {
+  background:
+    linear-gradient(135deg, rgba(255, 0, 204, 0.10), rgba(37, 99, 235, 0.10)),
+    rgba(12, 18, 33, 0.76);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 26px;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow-main);
+  backdrop-filter: blur(18px);
+}
+
+.welcome-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+  color: #ffffff;
+}
+
+.welcome-card p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  padding: 24px;
+  background: rgba(13, 20, 36, 0.82);
+  backdrop-filter: blur(18px);
+  cursor: pointer;
+  transition: all 0.28s ease;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25);
+}
+
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(96, 165, 250, 0.25);
+  box-shadow:
+    0 20px 38px rgba(0, 0, 0, 0.35),
+    0 0 24px rgba(124, 58, 237, 0.14);
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  inset: auto -40px -40px auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.stat-card h3 {
+  margin: 0 0 8px;
+  font-size: 2.1rem;
+  color: #ffffff;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #a5b4fc;
+  font-weight: 500;
+}
+
+.warning-card {
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, 0.10), rgba(239, 68, 68, 0.08)),
+    rgba(13, 20, 36, 0.82);
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.activity-card {
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  padding: 22px;
+  background: rgba(13, 20, 36, 0.82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+}
+
+.activity-card h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.activity-card p {
+  margin: 10px 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-soft);
+}
+
+/* =========================
+   FORMS
+   ========================= */
+
+.amenity-form,
+.hotel-form,
+.room-type-form,
+.reservation-form {
+  background: rgba(12, 18, 33, 0.78);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-main);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.amenity-form input,
+.amenity-form textarea,
+.hotel-form input,
+.hotel-form textarea,
+.room-type-form input,
+.room-type-form textarea,
+.reservation-form input,
+.assign-box select,
+.search-box input,
+.search-box select,
+.status-box select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(7, 12, 24, 0.9);
+  color: var(--text-main);
+  outline: none;
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+.amenity-form textarea,
+.hotel-form textarea,
+.room-type-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.amenity-form input::placeholder,
+.amenity-form textarea::placeholder,
+.hotel-form input::placeholder,
+.hotel-form textarea::placeholder,
+.room-type-form input::placeholder,
+.room-type-form textarea::placeholder,
+.reservation-form input::placeholder,
+.search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+.amenity-form input:focus,
+.amenity-form textarea:focus,
+.hotel-form input:focus,
+.hotel-form textarea:focus,
+.room-type-form input:focus,
+.room-type-form textarea:focus,
+.reservation-form input:focus,
+.assign-box select:focus,
+.search-box input:focus,
+.search-box select:focus,
+.status-box select:focus {
+  border-color: rgba(96, 165, 250, 0.7);
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.12),
+    0 0 20px rgba(124, 58, 237, 0.12);
+}
+
+.amenity-form button,
+.hotel-form button,
+.room-type-form button,
+.reservation-form button,
+.assign-box button,
+.search-box button,
+.status-box button,
+.payment-card button,
+.review-card button,
+.hotel-card button,
+.amenity-card button,
+.room-type-card button,
+.reservation-card button {
+  width: fit-content;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 14px;
+  background: var(--gradient-main);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.26s ease;
+}
+
+.amenity-form button:hover,
+.hotel-form button:hover,
+.room-type-form button:hover,
+.reservation-form button:hover,
+.assign-box button:hover,
+.search-box button:hover,
+.status-box button:hover,
+.payment-card button:hover,
+.review-card button:hover,
+.hotel-card button:hover,
+.amenity-card button:hover,
+.room-type-card button:hover,
+.reservation-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.22);
+}
+
+/* =========================
+   INLINE TOOLBARS
+   ========================= */
+
+.assign-box,
+.search-box,
+.status-box {
+  background: rgba(12, 18, 33, 0.78);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  padding: 22px;
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-main);
+  margin-bottom: 20px;
+}
+
+.search-box,
+.status-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.assign-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* =========================
+   LIST / CARD VIEWS
+   ========================= */
+
+.amenity-list,
+.hotel-list,
+.payment-list,
+.reservation-list,
+.review-list,
+.room-type-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.amenity-card,
+.hotel-card,
+.payment-card,
+.reservation-card,
+.review-card,
+.room-type-card {
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  padding: 20px;
+  background: rgba(13, 20, 36, 0.82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+  transition: all 0.28s ease;
+}
+
+.amenity-card:hover,
+.hotel-card:hover,
+.payment-card:hover,
+.reservation-card:hover,
+.review-card:hover,
+.room-type-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(96, 165, 250, 0.25);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.3),
+    0 0 18px rgba(124, 58, 237, 0.10);
+}
+
+.amenity-card h4,
+.hotel-card h4,
+.payment-card h4,
+.reservation-card h4,
+.review-card h4,
+.room-type-card h4 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 1.15rem;
+}
+
+.amenity-card p,
+.hotel-card p,
+.payment-card p,
+.reservation-card p,
+.review-card p,
+.room-type-card p {
+  margin: 8px 0;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+/* =========================
+   MESSAGES / EMPTY / HR
+   ========================= */
+
+hr {
+  border: none;
+  height: 1px;
+  margin: 26px 0;
+  background: linear-gradient(to right, transparent, rgba(148, 163, 184, 0.35), transparent);
+}
+
+.amenities-container > p,
+.hotels-container > p,
+.payments-container > p,
+.reservations-container > p,
+.reviews-container > p,
+.room-types-container > p,
+.login-container > p,
+.register-container > p,
+.dashboard-container > p {
+  font-size: 14px;
+}
+
+.error-text,
+.error-message {
+  color: #fca5a5;
+}
+
+.success-text,
+.success-message {
+  color: #86efac;
+}
+
+/* plain Angular @if output messages */
+.amenities-container > p,
+.hotels-container > p,
+.payments-container > p,
+.reservations-container > p,
+.reviews-container > p,
+.room-types-container > p,
+.login-container > p,
+.register-container > p {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 900px) {
+  .login-container h2,
+  .register-container h2,
+  .dashboard-container h2,
+  .amenities-container h2,
+  .hotels-container h2,
+  .payments-container h2,
+  .reservations-container h2,
+  .reviews-container h2,
+  .room-types-container h2 {
+    font-size: 2rem;
+  }
+
+  .search-box,
+  .status-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-container,
+  .register-container,
+  .dashboard-container,
+  .amenities-container,
+  .hotels-container,
+  .payments-container,
+  .reservations-container,
+  .reviews-container,
+  .room-types-container {
+    padding: 20px 16px 32px;
+  }
+
+  .stats-grid,
+  .activity-grid,
+  .amenity-list,
+  .hotel-list,
+  .payment-list,
+  .reservation-list,
+  .review-list,
+  .room-type-list {
+    grid-template-columns: 1fr;
+  }
+}

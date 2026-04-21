@@ -1,0 +1,115 @@
+<div class="reservations-container">
+  <h2>Manage Reservations</h2>
+
+  <form (ngSubmit)="updateReservation()" class="reservation-form">
+    <input
+      type="text"
+      name="guestName"
+      [(ngModel)]="reservationForm.guestName"
+      placeholder="Guest Name"
+      required
+    />
+
+    <input
+      type="email"
+      name="guestEmail"
+      [(ngModel)]="reservationForm.guestEmail"
+      placeholder="Guest Email"
+      required
+    />
+
+    <input
+      type="text"
+      name="guestPhone"
+      [(ngModel)]="reservationForm.guestPhone"
+      placeholder="Guest Phone"
+      required
+    />
+
+    <input
+      type="date"
+      name="checkInDate"
+      [(ngModel)]="reservationForm.checkInDate"
+      required
+    />
+
+    <input
+      type="date"
+      name="checkOutDate"
+      [(ngModel)]="reservationForm.checkOutDate"
+      required
+    />
+
+    <input
+      type="number"
+      name="roomId"
+      [(ngModel)]="reservationForm.roomId"
+      placeholder="Room ID"
+      required
+    />
+
+    <input
+      type="number"
+      name="userId"
+      [(ngModel)]="reservationForm.userId"
+      placeholder="User ID"
+      required
+    />
+
+    <button type="submit" [disabled]="editingReservationId === null">
+      Update Reservation
+    </button>
+
+    @if (editingReservationId !== null) {
+      <button type="button" (click)="resetForm()">Cancel</button>
+    }
+  </form>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <hr />
+
+  <div class="search-box">
+    <input
+      type="number"
+      name="searchRoomId"
+      [(ngModel)]="searchRoomId"
+      placeholder="Search by Room ID"
+    />
+    <button type="button" (click)="searchByRoom()">Search Room</button>
+
+    <input
+      type="email"
+      name="searchGuestEmail"
+      [(ngModel)]="searchGuestEmail"
+      placeholder="Search by Guest Email"
+    />
+    <button type="button" (click)="searchByGuestEmail()">Search Email</button>
+
+    <button type="button" (click)="clearFilters()">Clear</button>
+  </div>
+
+  <div class="reservation-list">
+    @for (reservation of reservations; track reservation.id) {
+      <div class="reservation-card">
+        <h4>Reservation #{{ reservation.id }}</h4>
+        <p><strong>Guest Name:</strong> {{ reservation.guestName }}</p>
+        <p><strong>Email:</strong> {{ reservation.guestEmail }}</p>
+        <p><strong>Phone:</strong> {{ reservation.guestPhone }}</p>
+        <p><strong>Check-in:</strong> {{ reservation.checkInDate }}</p>
+        <p><strong>Check-out:</strong> {{ reservation.checkOutDate }}</p>
+        <p><strong>Room ID:</strong> {{ reservation.roomId }}</p>
+        <p><strong>User ID:</strong> {{ reservation.userId }}</p>
+
+        <button (click)="editReservation(reservation)">Edit</button>
+        <button (click)="deleteReservation(reservation.id!)">Delete</button>
+      </div>
+    }
+  </div>
+</div>

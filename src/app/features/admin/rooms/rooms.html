@@ -1,0 +1,73 @@
+<div class="rooms-container">
+  <h2>Manage Rooms</h2>
+
+  <form (ngSubmit)="saveRoom()" class="room-form">
+    <input
+      type="number"
+      name="roomNumber"
+      [(ngModel)]="roomForm.roomNumber"
+      placeholder="Room Number"
+      required
+    />
+
+    <select name="hotelId" [(ngModel)]="roomForm.hotelId" required>
+      <option [ngValue]="0" disabled>Select Hotel</option>
+      @for (hotel of hotels; track hotel.id) {
+        <option [ngValue]="hotel.id">{{ hotel.name }}</option>
+      }
+    </select>
+
+    <select name="roomTypeId" [(ngModel)]="roomForm.roomTypeId" required>
+      <option [ngValue]="0" disabled>Select Room Type</option>
+      @for (type of roomTypes; track type.id) {
+        <option [ngValue]="type.id">{{ type.typeName }}</option>
+      }
+    </select>
+
+    <label>
+      <input
+        type="checkbox"
+        name="isAvailable"
+        [(ngModel)]="roomForm.isAvailable"
+      />
+      Available
+    </label>
+
+    <button type="submit">
+      {{ editingRoomId !== null ? 'Update Room' : 'Add Room' }}
+    </button>
+
+    @if (editingRoomId !== null) {
+      <button type="button" (click)="resetForm()">Cancel</button>
+    }
+  </form>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <hr />
+
+  <h3>Room List</h3>
+
+  <div class="room-list">
+    @for (room of rooms; track room.id) {
+      <div class="room-card">
+        <h4>Room {{ room.roomNumber }}</h4>
+        <p><strong>Hotel:</strong> {{ getHotelName(room.hotelId) }}</p>
+        <p><strong>Room Type:</strong> {{ getRoomTypeName(room.roomTypeId) }}</p>
+        <p><strong>Status:</strong> {{ room.isAvailable ? 'Available' : 'Not Available' }}</p>
+
+        <button (click)="editRoom(room)">Edit</button>
+        <button (click)="deleteRoom(room.id!)">Delete</button>
+        <button (click)="toggleAvailability(room)">
+          {{ room.isAvailable ? 'Mark Unavailable' : 'Mark Available' }}
+        </button>
+      </div>
+    }
+  </div>
+</div>

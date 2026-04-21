@@ -1,0 +1,97 @@
+<div class="home-container">
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to Hotel Booking System</h1>
+      <p>
+        Discover hotels, explore rooms, make reservations, complete payments,
+        and manage your bookings in one place.
+      </p>
+
+      <div class="hero-buttons">
+        <button routerLink="/auth">User Login / Register</button>
+        <button routerLink="/admin/login">Admin Login</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights-section">
+    <h2>Why Choose Us?</h2>
+
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <h3>Easy Booking</h3>
+        <p>Choose hotels, select rooms, and reserve your stay in a few steps.</p>
+      </div>
+
+      <div class="highlight-card">
+        <h3>Secure Payments</h3>
+        <p>Track pending and completed payments clearly inside your reservations.</p>
+      </div>
+
+      <div class="highlight-card">
+        <h3>Simple Reviews</h3>
+        <p>Rate your completed stays and share your experience easily.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-contact-section">
+    <div class="info-card" routerLink="/about">
+      <h3>About Us</h3>
+      <p>Learn more about our hotel management and booking platform.</p>
+    </div>
+
+    <div class="info-card" routerLink="/contact">
+      <h3>Contact Us</h3>
+      <p>Need help? Reach out to our support team anytime.</p>
+    </div>
+  </section>
+
+  <section class="team-section">
+  <div class="team-header">
+    <h2>Project Team</h2>
+    <button type="button" class="team-btn" (click)="toggleTeam()">
+      {{ showTeam ? 'Hide Team 10' : 'Team 10' }}
+    </button>
+  </div>
+
+  @if (showTeam) {
+    <div class="team-grid">
+      @for (member of teamMembers; track member.name) {
+        <div
+          class="team-card"
+          (click)="selectMember(member)"
+          [class.active]="selectedMember?.name === member.name"
+        >
+          <div class="team-avatar">
+            {{ member.initials }}
+          </div>
+          <h3>{{ member.name }}</h3>
+        </div>
+      }
+    </div>
+  }
+
+  @if (selectedMember) {
+    <div class="contribution-panel">
+      <h3>{{ selectedMember.name }} - Contributions</h3>
+
+      <div class="contribution-list">
+        @for (item of selectedMember.contributions; track item.path + item.label) {
+          <button
+            type="button"
+            class="contribution-link"
+            (click)="openContribution(item.path)"
+          >
+            <span class="contribution-label">{{ item.label }}</span>
+            <span class="contribution-path">{{ item.path }}</span>
+          </button>
+        }
+      </div>
+
+      <p class="team-note">
+        User modules will open through user login. Admin modules will open through admin login.
+      </p>
+    </div>
+  }
+</section>

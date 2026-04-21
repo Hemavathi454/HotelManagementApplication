@@ -1,0 +1,38 @@
+.hotels-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.hotel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.hotel-form input,
+.hotel-form textarea {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.hotel-form button {
+  width: fit-content;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.hotel-list {
+  display: grid;
+  gap: 16px;
+}
+
+.hotel-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+}
+button {
+  margin: 2px;
+}

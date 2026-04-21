@@ -1,0 +1,50 @@
+.reservations-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.reservation-form input {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.reservation-form button {
+  width: fit-content;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.search-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.search-box input,
+.search-box button {
+  padding: 10px;
+  font-size: 15px;
+}
+
+.reservation-list {
+  display: grid;
+  gap: 16px;
+}
+
+.reservation-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+}
+button{
+  margin:2px;
+}
