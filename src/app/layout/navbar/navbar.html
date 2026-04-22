@@ -1,0 +1,13 @@
+<div class="navbar">
+  <div class="navbar-left">
+    <h2>{{ title }}</h2>
+  </div>
+
+  <div class="navbar-right">
+    @if (showHomeButton) {
+      <button type="button" (click)="goHome()">Home</button>
+    }
+
+    <button type="button" (click)="logout()">Logout</button>
+  </div>
+</div>

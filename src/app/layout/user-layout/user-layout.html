@@ -1,0 +1,19 @@
+<app-navbar [title]="'User Portal'" [showHomeButton]="true"></app-navbar>
+
+<div class="user-layout">
+  <div class="user-top-links">
+    @for (link of userLinks; track link.path) {
+      <a
+        [routerLink]="link.path"
+        class="user-link"
+        [class.active]="isActive(link.path)"
+      >
+        {{ link.label }}
+      </a>
+    }
+  </div>
+
+  <div class="user-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

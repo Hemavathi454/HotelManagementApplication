@@ -1,0 +1,103 @@
+<div class="amenities-container">
+  <h2>Manage Amenities</h2>
+
+  <form (ngSubmit)="saveAmenity()" class="amenity-form">
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="amenityForm.name"
+      placeholder="Amenity Name"
+      required
+    />
+
+    <textarea
+      name="description"
+      [(ngModel)]="amenityForm.description"
+      placeholder="Amenity Description"
+      required
+    ></textarea>
+
+    <button type="submit">
+      {{ editingAmenityId !== null ? 'Update Amenity' : 'Add Amenity' }}
+    </button>
+
+    @if (editingAmenityId !== null) {
+      <button type="button" (click)="resetForm()">Cancel</button>
+    }
+  </form>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <hr />
+
+  <h3>All Amenities</h3>
+
+  <div class="amenity-list">
+    @for (amenity of amenities; track amenity.id) {
+      <div class="amenity-card">
+        <h4>{{ amenity.name }}</h4>
+        <p>{{ amenity.description }}</p>
+
+        <button (click)="editAmenity(amenity)">Edit</button>
+        <button (click)="deleteAmenity(amenity.id!)">Delete</button>
+      </div>
+    }
+  </div>
+
+  <hr />
+
+  <h3>Assign / Remove Amenity To Room</h3>
+
+  <div class="assign-box">
+    <select [(ngModel)]="selectedRoomId" name="selectedRoomId">
+      <option [ngValue]="0">Select Room</option>
+      @for (room of rooms; track room.id) {
+        <option [ngValue]="room.id">{{ getRoomLabel(room) }}</option>
+      }
+    </select>
+
+    <select [(ngModel)]="selectedAmenityId" name="selectedAmenityId">
+      <option [ngValue]="0">Select Amenity</option>
+      @for (amenity of amenities; track amenity.id) {
+        <option [ngValue]="amenity.id">{{ amenity.name }}</option>
+      }
+    </select>
+
+    <button type="button" (click)="assignAmenityToRoom()">Assign</button>
+    <button type="button" (click)="removeAmenityFromRoom()">Remove</button>
+  </div>
+
+  <hr />
+
+  <h3>View Amenities By Room</h3>
+
+  <div class="search-box">
+    <select [(ngModel)]="searchRoomId" name="searchRoomId">
+      <option [ngValue]="0">Select Room</option>
+      @for (room of rooms; track room.id) {
+        <option [ngValue]="room.id">{{ getRoomLabel(room) }}</option>
+      }
+    </select>
+
+    <button type="button" (click)="loadAmenitiesByRoom()">View Amenities</button>
+  </div>
+
+  <div class="amenity-list">
+    @for (amenity of roomAmenities; track amenity.id) {
+      <div class="amenity-card">
+        <h4>{{ amenity.name }}</h4>
+        <p>{{ amenity.description }}</p>
+      </div>
+    }
+  </div>
+
+  @if (roomAmenities.length === 0) {
+    <p>No room amenities to display.</p>
+  }
+</div>

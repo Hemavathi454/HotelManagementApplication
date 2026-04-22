@@ -1,0 +1,50 @@
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255, 0, 204, 0.05), rgba(37, 99, 235, 0.05)),
+    rgba(9, 13, 24, 0.92);
+  color: white;
+  padding: 22px 18px;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.sidebar h3 {
+  margin: 0 0 22px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ff00cc, #7c3aed, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-link {
+  text-decoration: none;
+  color: #dbe7ff;
+  padding: 13px 14px;
+  border-radius: 14px;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.sidebar-link:hover {
+  transform: translateX(4px);
+  background: rgba(124, 58, 237, 0.16);
+  color: #ffffff;
+}
+
+.sidebar-link.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.26), rgba(124, 58, 237, 0.28));
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

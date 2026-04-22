@@ -1,0 +1,57 @@
+<div class="users-container">
+  <h2>Manage Users</h2>
+
+  <form (ngSubmit)="updateUser()" class="user-form">
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="userForm.name"
+      placeholder="Name"
+      required
+    />
+
+    <input
+      type="email"
+      name="email"
+      [(ngModel)]="userForm.email"
+      placeholder="Email"
+      required
+    />
+
+    <select name="role" [(ngModel)]="userForm.role" required>
+      <option value="CUSTOMER">CUSTOMER</option>
+      <option value="ADMIN">ADMIN</option>
+    </select>
+
+    <button type="submit" [disabled]="editingUserId === null">
+      Update User
+    </button>
+
+    @if (editingUserId !== null) {
+      <button type="button" (click)="resetForm()">Cancel</button>
+    }
+  </form>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <hr />
+
+  <div class="user-list">
+    @for (user of users; track user.id) {
+      <div class="user-card">
+        <h4>{{ user.name }}</h4>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Role:</strong> {{ user.role }}</p>
+
+        <button (click)="editUser(user)">Edit</button>
+        <button (click)="deleteUser(user.id!)">Delete</button>
+      </div>
+    }
+  </div>
+</div>

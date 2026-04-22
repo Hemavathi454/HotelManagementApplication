@@ -1,0 +1,85 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>
+      @if (isAdminMode) {
+        Admin Login
+      } @else {
+        {{ isLoginMode ? 'Login' : 'Register' }}
+      }
+    </h2>
+
+    @if (!isLoginMode && !isAdminMode) {
+      <form (ngSubmit)="register()" class="auth-form">
+        <input
+          type="text"
+          [(ngModel)]="registerData.name"
+          name="name"
+          placeholder="Name"
+          required
+        />
+
+        <input
+          type="email"
+          [(ngModel)]="registerData.email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+
+        <input
+          type="password"
+          [(ngModel)]="registerData.password"
+          name="password"
+          placeholder="Password"
+          autocomplete="new-password"
+          required
+        />
+
+        <button type="submit">Register</button>
+      </form>
+
+      <p class="switch-text">
+        Already have an account?
+        <span class="link" (click)="toggleMode()">Login</span>
+      </p>
+    }
+
+    @if (isLoginMode) {
+      <form (ngSubmit)="login()" class="auth-form">
+        <input
+          type="email"
+          [(ngModel)]="loginData.email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+
+        <input
+          type="password"
+          [(ngModel)]="loginData.password"
+          name="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          required
+        />
+
+        <button type="submit">Login</button>
+      </form>
+
+      @if (!isAdminMode) {
+        <p class="switch-text">
+          New user?
+          <span class="link" (click)="toggleMode()">Register</span>
+        </p>
+      }
+    }
+
+    @if (message) {
+      <p class="success">{{ message }}</p>
+    }
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  </div>
+</div>

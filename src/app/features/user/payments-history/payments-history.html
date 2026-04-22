@@ -1,0 +1,111 @@
+<div class="payments-container">
+  <h2>Payment Page</h2>
+
+  @if (reservationDetails && roomTypeDetails) {
+    <div class="payment-summary-card">
+      <h3>Payment Summary</h3>
+      <p><strong>Reservation ID:</strong> {{ reservationDetails.id }}</p>
+      <p><strong>Room ID:</strong> {{ reservationDetails.roomId }}</p>
+      <p><strong>Check-in:</strong> {{ reservationDetails.checkInDate }}</p>
+      <p><strong>Check-out:</strong> {{ reservationDetails.checkOutDate }}</p>
+      <p><strong>Total Nights:</strong> {{ totalNights }}</p>
+      <p><strong>Price / Night:</strong> ₹{{ roomTypeDetails.pricePerNight }}</p>
+      <p><strong>Total Amount:</strong> ₹{{ paymentForm.amount }}</p>
+    </div>
+  }
+
+  @if (!paymentSuccess) {
+    <form (ngSubmit)="createPayment()" class="payment-form">
+      <input
+        type="number"
+        name="reservationId"
+        [(ngModel)]="paymentForm.reservationId"
+        placeholder="Reservation ID"
+        required
+        readonly
+      />
+
+      <input
+        type="number"
+        name="amount"
+        [(ngModel)]="paymentForm.amount"
+        placeholder="Amount"
+        required
+        readonly
+      />
+
+      <input
+        type="date"
+        name="paymentDate"
+        [(ngModel)]="paymentForm.paymentDate"
+        required
+      />
+
+      <select
+        name="paymentStatus"
+        [(ngModel)]="paymentForm.paymentStatus"
+        required
+      >
+        <option value="PAID">PAID</option>
+        <option value="FAILED">FAILED</option>
+      </select>
+
+      <button type="submit">Make Payment</button>
+    </form>
+  }
+
+  @if (message) {
+    <p class="success-text">{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error-text">{{ errorMessage }}</p>
+  }
+
+  @if (paymentSuccess) {
+    <div class="success-card">
+      <h3>Payment Successful</h3>
+      <p>Your payment has been recorded successfully.</p>
+
+      <div class="success-actions">
+        <button type="button" (click)="goToMyReservations()">
+          Go to My Reservations
+        </button>
+
+        <button type="button" (click)="goToHome()">
+          Return Home
+        </button>
+      </div>
+    </div>
+  }
+
+  <hr />
+
+  <h3>Payments for this Reservation</h3>
+
+  <div class="search-box">
+    <input
+      type="number"
+      name="reservationSearchId"
+      [(ngModel)]="reservationSearchId"
+      placeholder="Enter Reservation ID"
+    />
+    <button type="button" (click)="loadPaymentsByReservation()">Search</button>
+  </div>
+
+  <div class="payment-list">
+    @for (payment of payments; track payment.id) {
+      <div class="payment-card">
+        <h4>Payment #{{ payment.id }}</h4>
+        <p><strong>Amount:</strong> {{ payment.amount }}</p>
+        <p><strong>Date:</strong> {{ payment.paymentDate }}</p>
+        <p><strong>Status:</strong> {{ payment.paymentStatus }}</p>
+        <p><strong>Reservation ID:</strong> {{ payment.reservationId }}</p>
+      </div>
+    }
+  </div>
+
+  @if (payments.length === 0 && !errorMessage) {
+    <p class="empty-text">No payments found.</p>
+  }
+</div>

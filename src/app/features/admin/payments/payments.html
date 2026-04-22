@@ -1,0 +1,54 @@
+<div class="payments-container">
+  <h2>Manage Payments</h2>
+
+  <div class="search-box">
+    <input
+      type="number"
+      name="reservationSearchId"
+      [(ngModel)]="reservationSearchId"
+      placeholder="Search by Reservation ID"
+    />
+    <button type="button" (click)="searchByReservation()">Search</button>
+    <button type="button" (click)="clearSearch()">Clear</button>
+  </div>
+
+  <div class="status-box">
+    <select name="newStatus" [(ngModel)]="newStatus">
+      <option value="PAID">PAID</option>
+      <option value="PENDING">PENDING</option>
+      <option value="FAILED">FAILED</option>
+    </select>
+
+    <button type="button" (click)="updateStatus()" [disabled]="selectedPaymentId === null">
+      Update Status
+    </button>
+  </div>
+
+  @if (message) {
+    <p>{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <div class="payment-list">
+    @for (payment of payments; track payment.id) {
+      <div class="payment-card">
+        <h4>Payment #{{ payment.id }}</h4>
+        <p><strong>Amount:</strong> {{ payment.amount }}</p>
+        <p><strong>Date:</strong> {{ payment.paymentDate }}</p>
+        <p><strong>Status:</strong> {{ payment.paymentStatus }}</p>
+        <p><strong>Reservation ID:</strong> {{ payment.reservationId }}</p>
+
+        <button (click)="selectPayment(payment)">
+          Select for Status Update
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (payments.length === 0 && !errorMessage) {
+    <p>No payments found.</p>
+  }
+</div>

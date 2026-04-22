@@ -1,0 +1,15 @@
+<div class="sidebar">
+  <h3>Admin Panel</h3>
+
+  <div class="sidebar-links">
+    @for (link of adminLinks; track link.path) {
+      <a
+        [routerLink]="link.path"
+        class="sidebar-link"
+        [class.active]="isActive(link.path)"
+      >
+        {{ link.label }}
+      </a>
+    }
+  </div>
+</div>

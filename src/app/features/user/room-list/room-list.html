@@ -1,0 +1,49 @@
+<div class="room-list-container">
+  <h2>Available Rooms</h2>
+
+  <div class="filters">
+    <select [(ngModel)]="selectedHotelId" name="hotelId">
+      <option [ngValue]="null">All Hotels</option>
+      @for (hotel of hotels; track hotel.id) {
+        <option [ngValue]="hotel.id">{{ hotel.name }}</option>
+      }
+    </select>
+
+    <label class="checkbox-label">
+      <input
+        type="checkbox"
+        [(ngModel)]="availableOnly"
+        name="availableOnly"
+      />
+      Available only
+    </label>
+
+    <button type="button" (click)="applyFilters()">Apply</button>
+    <button type="button" (click)="clearFilters()">Clear</button>
+  </div>
+
+  @if (errorMessage) {
+    <p class="error-text">{{ errorMessage }}</p>
+  }
+
+  <div class="room-grid">
+    @for (room of rooms; track room.id) {
+      <div class="room-card">
+        <h3>Room {{ room.roomNumber }}</h3>
+        <p><strong>Hotel:</strong> {{ getHotelName(room.hotelId) }}</p>
+        <p><strong>Room Type:</strong> {{ getRoomTypeName(room.roomTypeId) }}</p>
+        <p><strong>Price / Night:</strong> ₹{{ getPricePerNight(room.roomTypeId) }}</p>
+        <p><strong>Status:</strong> {{ room.isAvailable ? 'Available' : 'Not Available' }}</p>
+        <p><strong>Amenities:</strong> {{ getAmenityNames(room.id!) }}</p>
+
+        <button type="button" (click)="reserveRoom(room)">
+          Reserve This Room
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (rooms.length === 0 && !errorMessage) {
+    <p class="empty-text">No rooms found.</p>
+  }
+</div>

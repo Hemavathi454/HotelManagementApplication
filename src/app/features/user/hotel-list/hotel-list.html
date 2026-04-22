@@ -1,0 +1,46 @@
+
+
+  <div class="hotel-list-container">
+  <div class="header-section">
+    <h2>Explore Hotels</h2>
+    <p>Choose a hotel and continue your booking</p>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      [(ngModel)]="searchLocation"
+      placeholder="Search by location"
+      name="searchLocation"
+    />
+
+    <button type="button" (click)="searchByLocation()">Search</button>
+    <button type="button" (click)="clearSearch()">Clear</button>
+  </div>
+
+  @if (errorMessage) {
+    <p class="error-text">{{ errorMessage }}</p>
+  }
+
+  <div class="hotel-grid">
+    @for (hotel of hotels; track hotel.id) {
+      <div class="hotel-card">
+        <div class="hotel-card-body">
+          <h3>{{ hotel.name }}</h3>
+          <p class="location"><strong>Location:</strong> {{ hotel.location }}</p>
+          <p class="description">{{ hotel.description }}</p>
+        </div>
+
+        <div class="hotel-card-footer">
+          <button type="button" (click)="bookNow(hotel.id!)">
+            Book Now
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (hotels.length === 0 && !errorMessage) {
+    <p class="empty-text">No hotels found.</p>
+  }
+</div>

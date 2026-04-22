@@ -1,0 +1,87 @@
+<div class="dashboard-container">
+  <h2>Admin Dashboard</h2>
+
+  <div class="welcome-card">
+    <h3>Welcome, {{ currentUser?.name || 'Admin' }}</h3>
+    <p>Here is the overview of your hotel management system.</p>
+  </div>
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <div class="stats-grid">
+    <div class="stat-card" (click)="goTo('/admin/users')">
+      <h3>{{ totalUsers }}</h3>
+      <p>Users</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/admin/hotels')">
+      <h3>{{ totalHotels }}</h3>
+      <p>Hotels</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/admin/rooms')">
+      <h3>{{ totalRooms }}</h3>
+      <p>Rooms</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/admin/room-types')">
+      <h3>{{ totalRoomTypes }}</h3>
+      <p>Room Types</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/admin/amenities')">
+      <h3>{{ totalAmenities }}</h3>
+      <p>Amenities</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/admin/reservations')">
+      <h3>{{ totalReservations }}</h3>
+      <p>Reservations</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/admin/payments')">
+      <h3>{{ totalPayments }}</h3>
+      <p>Payments</p>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/admin/reviews')">
+      <h3>{{ totalReviews }}</h3>
+      <p>Reviews</p>
+    </div>
+
+    <div class="stat-card warning-card" (click)="goTo('/admin/payments')">
+      <h3>{{ pendingPayments }}</h3>
+      <p>Pending Payments</p>
+    </div>
+  </div>
+
+  <div class="activity-grid">
+    <div class="activity-card">
+      <h3>Recent Reservations</h3>
+      @for (reservation of recentReservations; track reservation.id) {
+        <p>
+          #{{ reservation.id }} — Room {{ reservation.roomId }} —
+          {{ reservation.checkInDate }} to {{ reservation.checkOutDate }}
+        </p>
+      }
+      @if (recentReservations.length === 0) {
+        <p>No recent reservations.</p>
+      }
+    </div>
+
+    <div class="activity-card">
+      <h3>Recent Payments</h3>
+      @for (payment of recentPayments; track payment.id) {
+        <p>
+          #{{ payment.id }} — {{ payment.amount }} —
+          {{ payment.paymentStatus }}
+        </p>
+      }
+      @if (recentPayments.length === 0) {
+        <p>No recent payments.</p>
+      }
+    </div>
+  </div>
+</div>
