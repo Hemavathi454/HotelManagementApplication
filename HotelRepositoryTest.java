@@ -1,6 +1,6 @@
 package com.hotelmanagementapplication.hotel_management.RepositoryTestLayer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+
 
 import com.hotelmanagementapplication.hotel_management.EntityClasses.Hotel;
 import com.hotelmanagementapplication.hotel_management.RepositoryLayer.HotelRepository;
