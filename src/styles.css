@@ -35,15 +35,17 @@
 
 html, body {
   background:
-    radial-gradient(circle at top left, rgba(255, 0, 204, 0.10), transparent 22%),
-    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.12), transparent 24%),
-    linear-gradient(135deg, #050816, #0a0f1c 45%, #0d1324 100%);
+    radial-gradient(circle at top left, rgba(255, 0, 204, 0.06), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.08), transparent 28%),
+    linear-gradient(135deg, #f5f7fb, #edf1f7 45%, #e5ebf3 100%);
+
   color: var(--text-main);
   font-family: "Segoe UI", Inter, Arial, sans-serif;
   min-height: 100%;
   margin: 0;
   scroll-behavior: smooth;
 }
+
 
 * {
   box-sizing: border-box;
@@ -373,7 +375,7 @@ p {
 .hotel-form,
 .room-type-form,
 .reservation-form {
-  background: rgba(12, 18, 33, 0.78);
+   background:rgb(242, 242, 244);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-xl);
   padding: 24px;
@@ -400,8 +402,8 @@ p {
   padding: 14px 16px;
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.18);
-  background: rgba(7, 12, 24, 0.9);
-  color: var(--text-main);
+   background:rgb(230, 230, 232);
+  color: black;
   outline: none;
   font-size: 15px;
   transition: all 0.25s ease;
@@ -490,7 +492,7 @@ p {
 .assign-box,
 .search-box,
 .status-box {
-  background: rgba(12, 18, 33, 0.78);
+  background:rgb(243, 243, 244);
   border: 1px solid var(--border-soft);
   border-radius: 22px;
   padding: 22px;

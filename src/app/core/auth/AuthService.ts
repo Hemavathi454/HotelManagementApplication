@@ -5,13 +5,11 @@ import { Observable, tap } from 'rxjs';
 import { RegisterRequest } from '../../shared/models/register-request.model';
 import { LoginRequest } from '../../shared/models/login-request.model';
 import { UserModel } from '../../shared/models/user.model';
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-   private apiUrl = 'http://localhost:8080/auth';
+  private apiUrl = 'http://localhost:8080/auth';
   private userKey = 'user';
   private tokenKey = 'authToken';
 
@@ -22,18 +20,19 @@ export class AuthService {
   }
 
   login(data: LoginRequest): Observable<UserModel> {
-  console.log('Calling login API with:', data);
+    console.log('Calling login API with:', data);
 
-  return this.http.post<UserModel>(`${this.apiUrl}/login`, data).pipe(
-    tap((user) => {
-      console.log('Login API response:', user);
+    return this.http.post<UserModel>(`${this.apiUrl}/login`, data).pipe(
+      tap((user) => {
+        console.log('Login API response:', user);
 
-      const basicToken = 'Basic ' + btoa(`${data.email}:${data.password}`);
-      localStorage.setItem(this.userKey, JSON.stringify(user));
-      localStorage.setItem(this.tokenKey, basicToken);
-    })
-  );
-}
+        const basicToken = 'Basic ' + btoa(`${data.email}:${data.password}`);
+        localStorage.setItem(this.userKey, JSON.stringify(user));
+        localStorage.setItem(this.tokenKey, basicToken);
+      })
+    );
+  }
+
   logout(): void {
     localStorage.removeItem(this.userKey);
     localStorage.removeItem(this.tokenKey);
@@ -41,7 +40,7 @@ export class AuthService {
 
   getUser(): UserModel | null {
     const user = localStorage.getItem(this.userKey);
-    return user ? JSON.parse(user) as UserModel : null;
+    return user ? (JSON.parse(user) as UserModel) : null;
   }
 
   getToken(): string | null {

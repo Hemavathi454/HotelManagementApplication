@@ -2,26 +2,29 @@
   <h2>Login</h2>
   <p>Sign in and continue your premium hotel journey.</p>
 
-  <form (ngSubmit)="onLogin()">
-    <input
-      type="email"
-      name="email"
-      [(ngModel)]="loginData.email"
-      placeholder="Email"
-      required
-    />
+  <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="loginData.email"
+    #email="ngModel"
+    placeholder="Email"
+    required
+    email
+  />
 
-    <input
-      type="password"
-      name="password"
-      [(ngModel)]="loginData.password"
-      placeholder="Password"
-      autocomplete="current-password"
-      required
-    />
+  <input
+    type="password"
+    name="password"
+    [(ngModel)]="loginData.password"
+    #password="ngModel"
+    placeholder="Password"
+    autocomplete="current-password"
+    required
+  />
 
-    <button type="submit">Login</button>
-  </form>
+  <button type="submit">Login</button>
+</form>
 
   @if (errorMessage) {
     <p class="error-message">{{ errorMessage }}</p>
